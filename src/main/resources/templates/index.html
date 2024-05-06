@@ -33,7 +33,7 @@
 			<main class="col-md-9">
 				<div class="filter-shop d-flex flex-wrap justify-content-between mb-5">
 					<div class="showing-product">
-						<p>Showing 1-20 of 55 results</p>
+						<p>Showing {{from}}-{{to}} of {{total}} results</p>
 					</div>
 					<div class="sort-by">
 						<select id="sorting" class="form-select" data-filter-sort="" data-filter-order="">
@@ -51,19 +51,21 @@
 				</div>
 
 				<div class="row product-content product-store">
-					{{!#articles}}
+					{{#articles}}
 						<div class="col-lg-3 col-md-4 mb-4">
 							<div class="card position-relative p-4 border rounded-3">
+<!--
 								<div class="position-absolute">
 									<p class="bg-primary py-1 px-3 fs-6 text-white rounded-2">10% off</p>
 								</div>
-								<img src="images/product-item1.png" class="img-fluid shadow-sm" alt="product item">
-								<h6 class="mt-4 mb-0 fw-bold"><a href="single-product.html">Title</a></h6>
+-->
+								<img src="{{image}}" class="img-fluid shadow-sm" alt="product item">
+								<h6 class="mt-4 mb-0 fw-bold"><a href="single-product.html">{{title}}</a></h6>
 								<div class="review-content d-flex">
-									<p class="my-2 me-2 fs-6 text-black-50">Author</p>
+									<p class="my-2 me-2 fs-6 text-black-50">{{author}}</p>
 								</div>
 
-								<span class="price mb-2 text-black-50">Pages: 298</span>
+								<span class="price mb-2 text-primary">{{price}}$</span>
 								<div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
 									<button type="button" href="#" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top"
 													data-bs-title="Tooltip on top">
@@ -71,17 +73,10 @@
 											<use xlink:href="#cart"></use>
 										</svg>
 									</button>
-									<a href="#" class="btn btn-dark">
-                      <span>
-                        <svg class="wishlist">
-                          <use xlink:href="#heart"></use>
-                        </svg>
-                      </span>
-									</a>
 								</div>
 							</div>
 						</div>
-					{{!/articles}}
+					{{/articles}}
 
 				</div>
 				{{> partials/pagination }}
