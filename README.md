@@ -134,3 +134,54 @@ Follow these steps to implement the book shop:
         }
    }
    ```
+
+## 5. Import and display articles
+1. In the [resources](src/main/resources) directory, create a [CSV file](src/main/resources/books.csv) containing a list of articles or books. It could look like this:
+   ```
+   Title;Author;Genre;Pages;Publisher;Price;Image
+   God Created the Integers;Hawking, Stephen;mathematics;197;Penguin;24,50;https://m.media-amazon.com/images/I/71HKbmRoVmL._AC_UY218_.jpg
+   ```
+2. In the  [Shop](src/main/java/onlineshop/Shop.java) class, create a `readArticles()` method that will read a CSV file and fill a [Book](src/main/java/onlineshop/merchandise/Book.java) list from it. Pass the `fileName` and `List` as parameters:
+   ```java
+   private static void readArticles(String fileName, List<Book> books) { ... }
+   ```
+   
+3. Create a getter method so that we can access the article list from outside.
+   ```java
+   public static List<Book> getArticles() {
+        return books;
+   }
+   ```
+4. In [ShopController.homePage()](src/main/java/onlineshop/ShopController.java#L28), load the article list and pass it to the view model.
+   ```java
+   @GetMapping(value = {"/index.html"})
+   public String homePage(Model model) {
+        model.addAttribute("articles", Shop.getArticles());
+        return "index";
+   }
+   ```
+5. In the [index.html](src/main/resources/templates/index.html) template, iterate over the `articles`. Integrate the article fields in the proper HTML code section.
+   ```handlebars
+    <div class="row product-content product-store">
+        {{#articles}}
+            <div class="col-lg-3 col-md-4 mb-4">
+                <div class="card position-relative p-4 border rounded-3">
+                    <img src="{{image}}" class="img-fluid shadow-sm" alt="{{title}}">
+                    <h6 class="mt-4 mb-0 fw-bold"><a href="#">{{title}}</a></h6>
+                    <div class="review-content d-flex">
+                        <p class="my-2 me-2 fs-6 text-black-50">{{author}}</p>
+                    </div>
+                    <span class="price mb-2 text-primary">{{price}}$</span>
+                    <div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
+                        <button type="button" href="#" class="btn btn-dark" data-bs-toggle="tooltip" 
+                          data-bs-placement="top" data-bs-title="Tooltip on top">
+                            <svg class="cart"><use xlink:href="#cart"></use></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {{/articles}}
+    </div>
+   ```
+6. Check the result in your browser. The dynamic articles from the CSV file should appear on your homepage: http://localhost:8080. The result should look like this:<br/>
+   ![Book list](src/main/resources/screenshots/book-list.png)
