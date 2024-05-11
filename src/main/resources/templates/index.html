@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<title>Overview</title>
 	<meta name="keywords" content="">
@@ -31,9 +31,16 @@
 	<div class="container">
 		<div class="row flex-row-reverse g-md-5">
 			<main class="col-md-9">
+				{{#showMessage}}
+					<div class="alert alert-success alert-dismissible fade show" role="alert">
+						{{message}}
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				{{/showMessage}}
+
 				<div class="filter-shop d-flex flex-wrap justify-content-between mb-5">
 					<div class="showing-product">
-						<p>Showing 1-10 of 220 results</p>
+						<p>Showing {{from}}-{{to}} of {{noOfArticles}} results</p>
 					</div>
 					<div class="sort-by">
 						<select id="sorting" class="form-select" data-filter-sort="" data-filter-order="">
@@ -61,12 +68,12 @@
 								</div>
 								<span class="price mb-2 text-primary">{{price}}$</span>
 								<div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
-									<button type="button" href="#" class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="top"
-													data-bs-title="Tooltip on top">
+									<a href="/cart/add/{{articleNo}}" role="button" class="btn btn-dark"
+										 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
 										<svg class="cart">
 											<use xlink:href="#cart"></use>
 										</svg>
-									</button>
+									</a>
 								</div>
 							</div>
 						</div>

@@ -34,6 +34,10 @@ public class Article {
     return image;
   }
 
+  public int getArticleNo() {
+    return articleNo;
+  }
+
   public String getManufacturer() {
     return manufacturer;
   }

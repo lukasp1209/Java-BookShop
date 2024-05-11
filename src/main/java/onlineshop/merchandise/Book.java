@@ -1,7 +1,7 @@
 package onlineshop.merchandise;
 
-import onlineshop.enums.Genre;
 import onlineshop.enums.Format;
+import onlineshop.enums.Genre;
 
 public class Book extends Article {
     protected int pages;
@@ -35,9 +35,4 @@ public class Book extends Article {
     public int getPages() {
         return pages;
     }
-
-    public String getTitle() {
-        return title;
-    }
-
 }

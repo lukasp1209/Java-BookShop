@@ -8,11 +8,11 @@ import java.util.Date;
 
 public class Customer {
     /**
-     * erzeugt für jeden Kunden eine neue Kundennummer
+     * Generates a new customer number for each customer
      */
     private static Integer customerCounter = 1;
     /**
-     * wandelt den Date-String in ein {@link Date} um
+     * Converts the date string into a {@link Date}
      */
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.mm.yyyy");
 

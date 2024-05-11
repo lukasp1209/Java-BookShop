@@ -10,22 +10,38 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.FileReader;
 import java.io.Reader;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Manages the Shop
  */
 @SpringBootApplication
 public class Shop {
+    public static final DecimalFormat df = new DecimalFormat("0.00", DecimalFormatSymbols.getInstance(Locale.US));
+
     private final static String RESOURCES = "src/main/resources/";
     private final static String CSV_FILE = "books.csv";
     private static Logger log = LogManager.getLogger(Shop.class);
     private final static List<Book> books = new ArrayList<>(220);
 
+
     public static void main(String[] args) {
-        readArticles(CSV_FILE, books);
+        Shop shop = new Shop();
+        shop.readArticles(CSV_FILE, books);
         SpringApplication.run(Shop.class, args);
+        log.info("Server started on http://localhost:8080");
+    }
+
+    public List<Book> getArticles() {
+        return books;
+    }
+
+    public int getNumOfArticles() {
+        return books.size();
     }
 
     /**
@@ -33,7 +49,7 @@ public class Shop {
      * @param fileName {@link String}
      * @param books    {@link List}
      */
-    private static void readArticles(String fileName, List<Book> books) {
+    private void readArticles(String fileName, List<Book> books) {
         try {
             Reader in = new FileReader(RESOURCES + fileName);
             CSVFormat csvFormat = CSVFormat.EXCEL.withFirstRecordAsHeader().builder()
@@ -56,7 +72,7 @@ public class Shop {
                 }
 
                 String image = record.get("Image");
-                if(image.isEmpty()) image = "/images/product-item2.png";
+                if (image.isEmpty()) image = "/images/book-placeholder.png";
                 Book book = new Book(title, author, publisher, genre, pages, price, image);
                 books.add(book);
             }
@@ -67,7 +83,16 @@ public class Shop {
         log.debug(books.size() + " books imported");
     }
 
-    public static List<Book> getArticles() {
-        return books;
+    /**
+     * Gets a /book by its article number
+     * @param articleNo {@link Integer}
+     * @return existingBook {@link Book}
+     */
+    public Book getArticleByNumber(int articleNo) {
+        for (Book book : books) {
+            if(book.getArticleNo() == articleNo)
+                return book;
+        }
+        return null;
     }
 }
