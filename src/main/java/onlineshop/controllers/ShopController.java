@@ -38,9 +38,9 @@ public class ShopController {
                            @RequestParam(name = "page", required = false) Integer page,
                            @RequestParam(name = "sort", required = false) Sorting sort,
                            HttpSession session) {
-        sort = (Sorting) getSessionParam(session, "sort", sort, Sorting.ALPHA_UP);
         page = (Integer) getSessionParam(session, "page", page, 1);
-        handlePagination(view, sort, page);
+        sort = (Sorting) getSessionParam(session, "sort", sort, Sorting.ALPHA_UP);
+        handleSortingPagination(view, sort, page);
         getCartItems(view);
         return "index";
     }
@@ -78,7 +78,7 @@ public class ShopController {
                                    Object defaultValue) {
         if (paramValue == null) {
             Object sessionValue = session.getAttribute(paramName);
-            paramValue = sessionValue == null ? defaultValue : sessionValue;
+            paramValue = sessionValue != null ? sessionValue : defaultValue;
         }
         session.setAttribute(paramName, paramValue);
         return paramValue;
@@ -91,7 +91,7 @@ public class ShopController {
      * @param sorting {@link Sorting}
      * @param page    {@link Integer}
      */
-    private void handlePagination(Model view, Sorting sorting, Integer page) {
+    private void handleSortingPagination(Model view, Sorting sorting, Integer page) {
         int numOfArticles = shop.getNumOfArticles();
         int from = Math.max((page - 1) * PAGE_SIZE, 0);
         int to = Math.min(numOfArticles, from + PAGE_SIZE);
@@ -114,10 +114,10 @@ public class ShopController {
         view.addAttribute("prevPage", Math.max(page - 1, 1));
         view.addAttribute("nextPage", Math.min(page + 1, pageCount));
 
-        handleSorting(view, sorting);
+        createSortingLinks(view, sorting);
     }
 
-    private void handleSorting(Model view, Sorting currentSort) {
+    private void createSortingLinks(Model view, Sorting currentSort) {
         List<Sorting> sortings = new ArrayList<>();
         for (Sorting entry : Sorting.values()) {
             String isCurrentSort = (entry == currentSort) ? "selected" : "";

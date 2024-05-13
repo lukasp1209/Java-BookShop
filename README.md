@@ -593,8 +593,8 @@ Now it's finally time to display the sortings on the homepage.
    ```
 2. Create a [sorting.html](src/main/resources/templates/partials/sorting.html) partial. In it, we iterate over the sortings that were passed by the controller and display the proper field values.
    ```handlebars
-   <select id="sorting" class="form-select" data-filter-sort="" data-filter-order="">
-   {{# sortings}}
+   <select id="sorting" class="form-select" onchange="triggerSorting(this)">
+   {{#sortings}}
      <option value="{{value}}" {{selected}}>{{label}}</option>
    {{/sortings}}
    </select>
@@ -604,28 +604,23 @@ Now it's finally time to display the sortings on the homepage.
 
 ### Switch sorting with the browser
 The last step is to trigger the change the search parameters in the URL as soon as the user changes the sorting dropbox. This cannot be achieved with standart HTML means, so we need a little JavaScript magic here.
-1. Create a `<script>` tag in the `<head>` section of [index.html](src/main/resources/templates/index.html). Let's add an event listener that triggers, once the HTML page has finished loading:
+1. Create a `<script>` tag in the `<head>` section of [index.html](src/main/resources/templates/index.html). Let's add a `triggerSorting` function that reacts to the change event of the sorting dropdown box.
    ```html
    <script>
-   document.addEventListener("DOMContentLoaded", () => {
+   function triggerSorting(element) {
      ...
    }
    </script>
    ```
-2. Next, we want to react to the change event of the sorting dropdown box:
-   ```javascript
-   $('#sorting').on('change', (event) => { ... }
-   ```
-3. Let's add the selected option's (=`event.target`) value  to the browsers search parameters and reset the paging to page 1:
+2. Let's add the selected option's (=`event.target`) value  to the browsers search parameters and reset the paging to page 1:
    ```javascript
    const searchParams = new URLSearchParams(location.search)
-   const sorting = event.target.value
-   searchParams.set('sort', sorting)
+   searchParams.set('sort', element.value)
    searchParams.set('page', "1")
    ```
-4. Last step - change the browsers URL:
+3. Last step - change the browsers URL:
    ```javascript
    location.search = searchParams.toString()
    ```
-5. Congratulations! Now it's time to thoroughly test the sorting in your browser!<br/>
+4. Congratulations! Now it's time to thoroughly test the sorting in your browser!<br/>
    ![sorted-by-price.png](src/main/resources/screenshots/sorted-by-price.png)
