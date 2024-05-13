@@ -335,7 +335,6 @@ textarea.form-control::placeholder {
   border: none;
   background-color: transparent;
   line-height: normal;
-  width: 180px;
 }
 .form-select:focus {
   box-shadow: none;

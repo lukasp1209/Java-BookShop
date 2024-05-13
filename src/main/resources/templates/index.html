@@ -5,6 +5,18 @@
 	<meta name="keywords" content="">
 	<meta name="description" content="">
 	{{> partials/htmlHead }}
+	<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		$('#sorting').on('change', (event) => {
+			const searchParams = new URLSearchParams(location.search)
+			const sorting = event.target.value
+			searchParams.set('sort', sorting)
+			if (sorting === 'DEFAULT')
+				searchParams.set('page', "1")
+			location.search = searchParams.toString()
+		})
+	})
+	</script>
 </head>
 <body>
 {{> partials/header }}
@@ -43,17 +55,7 @@
 						<p>Showing {{from}}-{{to}} of {{numOfArticles}} results</p>
 					</div>
 					<div class="sort-by">
-						<select id="sorting" class="form-select" data-filter-sort="" data-filter-order="">
-							<option value="">Default sorting</option>
-							<option value="">Name (A - Z)</option>
-							<option value="">Name (Z - A)</option>
-							<option value="">Price (Low-High)</option>
-							<option value="">Price (High-Low)</option>
-							<option value="">Rating (Highest)</option>
-							<option value="">Rating (Lowest)</option>
-							<option value="">Model (A - Z)</option>
-							<option value="">Model (Z - A)</option>
-						</select>
+						{{> partials/sorting }}
 					</div>
 				</div>
 
@@ -62,7 +64,9 @@
 						<div class="col">
 							<div class="card position-relative p-4 border rounded-3">
 								<img src="{{image}}" class="img-fluid shadow-sm" alt="product item">
-								<h6 class="mt-4 mb-0 fw-bold"><a href="#">{{title}}</a></h6>
+								<h6 class="mt-4 mb-0 fw-bold">
+									<a href="details.html?id={{articleNo}}">{{title}}</a>
+								</h6>
 								<div class="review-content d-flex">
 									<p class="my-2 me-2 fs-6 text-black-50">{{author}}</p>
 								</div>

@@ -3,6 +3,7 @@ package onlineshop.controllers;
 import jakarta.servlet.http.HttpSession;
 import onlineshop.Cart;
 import onlineshop.Shop;
+import onlineshop.enums.Sorting;
 import onlineshop.merchandise.Book;
 import onlineshop.merchandise.CartItem;
 import org.apache.logging.log4j.LogManager;
@@ -14,9 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class ShopController {
@@ -35,46 +34,50 @@ public class ShopController {
     }
 
     @GetMapping(value = {"/index.html"})
-    public String homePage(Model model,
+    public String homePage(Model view,
                            @RequestParam(name = "page", required = false) Integer page,
+                           @RequestParam(name = "sort", required = false) Sorting sort,
                            HttpSession session) {
-        page = getSessionParam(session, "page", page, 1);
-        handlePagination(model, page);
-        getCartItems(model);
+        sort = (Sorting) getSessionParam(session, "sort", sort, Sorting.ALPHA_UP);
+        page = (Integer) getSessionParam(session, "page", page, 1);
+        handlePagination(view, sort, page);
+        getCartItems(view);
         return "index";
     }
 
     @GetMapping(value = {"/{name}.html"})
-    public String htmlMapping(Model model, @PathVariable(name = "name") String name) {
-        getCartItems(model);
+    public String htmlMapping(Model view, @PathVariable(name = "name") String name) {
+        getCartItems(view);
         return name;
     }
 
     /**
-     * Loads the cart items from the cart object and stores the corresponding attributes in the view model.
-     * @param model {@link Model}
+     * Loads the cart items from the cart object and stores the corresponding attributes in the view view.
+     *
+     * @param view {@link Model}
      */
-    private void getCartItems(Model model) {
+    private void getCartItems(Model view) {
         List<CartItem> cartItems = cart.getItems();
-        model.addAttribute("cartItems", cartItems);
-        model.addAttribute("numOfCartItems", cart.getNumOfItems());
-        model.addAttribute("grandTotal", cart.getGrandTotal());
+        view.addAttribute("cartItems", cartItems);
+        view.addAttribute("numOfCartItems", cart.getNumOfItems());
+        view.addAttribute("grandTotal", cart.getGrandTotal());
     }
 
     /**
      * Looks up the requested parameter in  the session. If it doesn't exist, it uses the default value.
-     * @param session {@link jakarta.servlet.http.HttpSession}
-     * @param paramName {@link String}
-     * @param paramValue {@link Integer}
-     * @param defaultValue {@link Integer}
-     * @return sessionValue {@link Integer}
+     *
+     * @param session      {@link jakarta.servlet.http.HttpSession}
+     * @param paramName    {@link String}
+     * @param paramValue   {@link Object}
+     * @param defaultValue {@link Object}
+     * @return sessionValue {@link Object}
      */
-    private Integer getSessionParam(HttpSession session,
-                                    String paramName,
-                                    Integer paramValue,
-                                    Integer defaultValue) {
+    private Object getSessionParam(HttpSession session,
+                                   String paramName,
+                                   Object paramValue,
+                                   Object defaultValue) {
         if (paramValue == null) {
-            Integer sessionValue = (Integer) session.getAttribute(paramName);
+            Object sessionValue = session.getAttribute(paramName);
             paramValue = sessionValue == null ? defaultValue : sessionValue;
         }
         session.setAttribute(paramName, paramValue);
@@ -83,31 +86,46 @@ public class ShopController {
 
     /**
      * Delivers the articles sublist corresponding to the selected page
-     * @param model {@link Model}
-     * @param page {@link Integer}
+     *
+     * @param view   {@link Model}
+     * @param sorting {@link Sorting}
+     * @param page    {@link Integer}
      */
-    private void handlePagination(Model model, Integer page) {
+    private void handlePagination(Model view, Sorting sorting, Integer page) {
         int numOfArticles = shop.getNumOfArticles();
         int from = Math.max((page - 1) * PAGE_SIZE, 0);
         int to = Math.min(numOfArticles, from + PAGE_SIZE);
-        List<Book> articles = shop.getArticles().subList(from, to);
+        List<Book> articles = shop.getArticles(sorting, from, to);
 
-        model.addAttribute("articles", articles);
-        model.addAttribute("from", ++from);
-        model.addAttribute("to", to);
-        model.addAttribute("numOfArticles", numOfArticles);
+        view.addAttribute("articles", articles);
+        view.addAttribute("from", ++from);
+        view.addAttribute("to", to);
+        view.addAttribute("numOfArticles", numOfArticles);
 
         int pageCount = (numOfArticles / PAGE_SIZE) + 1;
         Map<Integer, String> pages = new HashMap<>();
-        for(int pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
+        for (int pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
             String active = (pageNumber == page) ? "active" : "";
             pages.put(pageNumber, active);
         }
 
-        model.addAttribute("pageCount", pageCount);
-        model.addAttribute("pages", pages.entrySet());
-        model.addAttribute("prevPage", Math.max(page - 1, 1));
-        model.addAttribute("nextPage", Math.min(page + 1, pageCount));
+        view.addAttribute("pageCount", pageCount);
+        view.addAttribute("pages", pages.entrySet());
+        view.addAttribute("prevPage", Math.max(page - 1, 1));
+        view.addAttribute("nextPage", Math.min(page + 1, pageCount));
+
+        handleSorting(view, sorting);
+    }
+
+    private void handleSorting(Model view, Sorting currentSort) {
+        List<Sorting> sortings = new ArrayList<>();
+        for (Sorting entry : Sorting.values()) {
+            String isCurrentSort = (entry == currentSort) ? "selected" : "";
+            entry.setSelected(isCurrentSort);
+            sortings.add(entry);
+        }
+        view.addAttribute("sortings", sortings);
+        view.addAttribute("sort", currentSort.getValue());
     }
 
 }
