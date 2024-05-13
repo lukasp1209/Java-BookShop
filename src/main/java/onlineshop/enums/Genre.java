@@ -41,5 +41,4 @@ public enum Genre {
         }
         return null;
     }
-
 }

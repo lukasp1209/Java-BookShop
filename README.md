@@ -1,6 +1,6 @@
 # Spring Boot course
 
-This project is meant to teach Spring Boot fundamentals by creating a bookshop, step by step. <br/>
+This project is meant to teach Spring B oot fundamentals by creating a bookshop, step by step. <br/>
 It uses the [Spring Boot](https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started.html) framework, a [Bootstrap 5](https://getbootstrap.com) frontend and stores its data in [CSV](https://en.wikipedia.org/wiki/Comma-separated_values) files.
 
 This is how the final shop looks like:
@@ -479,3 +479,153 @@ As Mustache doesn't handle logic, we have to implement it in the controller.
 4. The result should look like this:<br/>
    ![Pagination screenshot](src/main/resources/screenshots/pagination.png)   
 5. Test the proper pagination by clicking the links!
+
+## 8. Handle sorting on the overview page
+### Create an Enum for Sorting
+It is very sensible to use an `Enum` for the sorting selection list. This allows us to display it in the frontend and react to the transmitted parameters in the backend. We have already used named enums for genres, book format and gender.
+1. So we create a new `Enum` class called [Sorting.java](src/main/java/onlineshop/enums/Sorting.java) in the [enums](src/main/java/onlineshop/enums) directory.
+   ```java
+   public enum Sorting {
+      ALPHA_UP  ("Name A-Z"),
+      ALPHA_DOWN("Name Z-A");
+      
+      private final String label;
+      
+      Sorting(String label) {
+        this.label = label;
+      }
+   }
+   ```
+### Handle sorting in the model
+1. We add a sort parameter to the `getArticles()` method and call a separate `sortArticles()` method for it.
+   ```java
+   public List<Book> getArticles(Sorting sorting, int from, int to) {
+     sortArticles(sorting);
+     ...
+   }
+   ```
+2. In `sortArticles()`, we program a switch statement that takes the [Sorting](src/main/java/onlineshop/enums/Sorting.java) as argument. To perform the sorting, we use the `Comparator.comparing()` method. This takes the getter reference of the desired field as an argument. 
+   ```java
+   private void sortArticles(Sorting sorting) {
+     switch (sorting) {
+       case ALPHA_UP:
+         books.sort(Comparator.comparing(Book::getTitle));
+         break;
+     }
+   }
+   ```
+3. To sort the books in descending order, we use the `reversed()` method.
+   ```java
+   case ALPHA_DOWN:
+     books.sort(Comparator.comparing(Book::getTitle).reversed()); 
+   break;
+   ```
+
+### Control sorting via request parameter
+The next step is to react to possible URL sorting parameters in the ShopController.
+1. First we need to add the new request parameter in the homePage method. If there is such a request parameter, we remember it in the session, otherwise we use the standard sorting.
+   ```java
+    @GetMapping(value = {"/index.html"})
+    public String homePage(Model view,
+      @RequestParam(name = "page", required = false) Integer page,
+      @RequestParam(name = "sort", required = false) Sorting sort,
+      HttpSession session) {
+        sort = (Sorting) getSessionParam(session, "sort", sort, Sorting.ALPHA_UP);
+        ...
+   }
+   ```
+
+2. Next, we add a [Sorting](src/main/java/onlineshop/enums/Sorting.java) parameter to the `handlePagination()` method and pass it to the shop's `getArticles()` method.
+   ```java
+   void handlePagination(Model view, Sorting sorting, Integer page) {
+     ...
+     List<Book> articles = shop.getArticles(sorting, from, to);
+     ...
+     handleSorting(view, sorting);
+   }
+   ```
+3. Last, we need to pass a view model to the [Mustache](https://www.baeldung.com/mustache) page, so it can render the proper `<select>` sort options. They need three parameters:
+   ```handlebars
+   <option value="{{value}}" {{selected}}>{{label}}</option>
+   ```
+   It's pretty tricky to pass more than a key-value-pair to Mustache, so I decided to enhance the [Sorting](src/main/java/onlineshop/enums/Sorting.java) class to provide the needed data. 
+4. To do so, we add Getters for `value` and `label`. 
+   ```java
+   public String getValue() {
+       return name();
+   }
+   public String getLabel() {
+    return label;
+   }
+   ```
+5. Next, we create a Getter/Setter for `selected`.   
+   ```java
+   private String selected;
+     
+   public String getSelected() {
+     return selected;
+   }
+   public void setSelected(String selected) {
+     this.selected = selected;
+   }
+   ```
+6. Now we can use the enhanced `Enum` model in our `handleSorting()` method. We iterate over the sorting values, check whether the entry is the current sorting and set the `selected` field, accordingly. 
+   ```java
+   handleSorting(Model view, Sorting currentSort) {
+     List<Sorting> sortings = new ArrayList<>();
+     for (Sorting entry : Sorting.values()) {
+         String isCurrentSort = (entry == currentSort) ? "selected" : "";
+         entry.setSelected(isCurrentSort);
+         sortings.add(entry);
+     }
+     view.addAttribute("sortings", sortings);
+     view.addAttribute("sort", currentSort.getValue());
+   }
+   ```
+
+### Display sort options
+Now it's finally time to display the sortings on the homepage. 
+1. Find the sorting section in [index.html](src/main/resources/templates/index.html) and replace it with this Mustache code:
+   ```handlebars
+   <div class="sort-by">
+     {{> partials/sorting }}
+   </div>
+   ```
+2. Create a [sorting.html](src/main/resources/templates/partials/sorting.html) partial. In it, we iterate over the sortings that were passed by the controller and display the proper field values.
+   ```handlebars
+   <select id="sorting" class="form-select" data-filter-sort="" data-filter-order="">
+   {{# sortings}}
+     <option value="{{value}}" {{selected}}>{{label}}</option>
+   {{/sortings}}
+   </select>
+   ```
+3. The result should look like this:<br/>
+   ![Select sorting](src/main/resources/screenshots/select-sorting.png)
+
+### Switch sorting with the browser
+The last step is to trigger the change the search parameters in the URL as soon as the user changes the sorting dropbox. This cannot be achieved with standart HTML means, so we need a little JavaScript magic here.
+1. Create a `<script>` tag in the `<head>` section of [index.html](src/main/resources/templates/index.html). Let's add an event listener that triggers, once the HTML page has finished loading:
+   ```html
+   <script>
+   document.addEventListener("DOMContentLoaded", () => {
+     ...
+   }
+   </script>
+   ```
+2. Next, we want to react to the change event of the sorting dropdown box:
+   ```javascript
+   $('#sorting').on('change', (event) => { ... }
+   ```
+3. Let's add the selected option's (=`event.target`) value  to the browsers search parameters and reset the paging to page 1:
+   ```javascript
+   const searchParams = new URLSearchParams(location.search)
+   const sorting = event.target.value
+   searchParams.set('sort', sorting)
+   searchParams.set('page', "1")
+   ```
+4. Last step - change the browsers URL:
+   ```javascript
+   location.search = searchParams.toString()
+   ```
+5. Congratulations! Now it's time to thoroughly test the sorting in your browser!<br/>
+   ![sorted-by-price.png](src/main/resources/screenshots/sorted-by-price.png)

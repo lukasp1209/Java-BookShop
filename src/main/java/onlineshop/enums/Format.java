@@ -11,8 +11,7 @@ public enum Format {
 
     public final String label;
 
-    private Format(String label) {
+    Format(String label) {
         this.label = label;
     }
-
 }
