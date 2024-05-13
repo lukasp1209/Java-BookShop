@@ -22,16 +22,12 @@ import java.util.Locale;
 @SpringBootApplication
 public class Shop {
     public static final DecimalFormat df = new DecimalFormat("0.00", DecimalFormatSymbols.getInstance(Locale.US));
-
-    private final static String RESOURCES = "src/main/resources/";
-    private final static String CSV_FILE = "books.csv";
-    private static Logger log = LogManager.getLogger(Shop.class);
+    private final static Logger log = LogManager.getLogger(Shop.class);
     private final static List<Book> books = new ArrayList<>(220);
-
 
     public static void main(String[] args) {
         Shop shop = new Shop();
-        shop.readArticles(CSV_FILE, books);
+        shop.readArticles("src/main/resources/books.csv", books);
         SpringApplication.run(Shop.class, args);
         log.info("Server started on http://localhost:8080");
     }
@@ -51,29 +47,27 @@ public class Shop {
      */
     private void readArticles(String fileName, List<Book> books) {
         try {
-            Reader in = new FileReader(RESOURCES + fileName);
+            Reader in = new FileReader(fileName);
             CSVFormat csvFormat = CSVFormat.EXCEL.withFirstRecordAsHeader().builder()
                     .setDelimiter(';')
                     .build();
             Iterable<CSVRecord> records = csvFormat.parse(in);
 
             for (CSVRecord record : records) {
-                String title = record.get("Title");
-                String author = record.get("Author");
-                String publisher = record.get("Publisher");
-                String genre = record.get("Genre");
-                int pages = Integer.parseInt(record.get("Pages"));
+                String title = record.get("title");
+                String author = record.get("author");
+                String publisher = record.get("publisher");
+                String genre = record.get("genre");
 
                 double price = 0.0;
-                String priceString = record.get("Price");
+                String priceString = record.get("price");
                 if (!priceString.isEmpty()) {
-                    priceString = priceString.replace(',', '.');
                     price = Double.parseDouble(priceString);
                 }
 
-                String image = record.get("Image");
+                String image = record.get("image");
                 if (image.isEmpty()) image = "/images/book-placeholder.png";
-                Book book = new Book(title, author, publisher, genre, pages, price, image);
+                Book book = new Book(title, author, publisher, genre, price, image);
                 books.add(book);
             }
             in.close();
@@ -85,12 +79,13 @@ public class Shop {
 
     /**
      * Gets a /book by its article number
+     *
      * @param articleNo {@link Integer}
      * @return existingBook {@link Book}
      */
     public Book getArticleByNumber(int articleNo) {
         for (Book book : books) {
-            if(book.getArticleNo() == articleNo)
+            if (book.getArticleNo() == articleNo)
                 return book;
         }
         return null;

@@ -30,7 +30,7 @@
 <div class="shopify-grid padding-small">
 	<div class="container">
 		<div class="row flex-row-reverse g-md-5">
-			<main class="col-md-9">
+			<main class="col-md-12">
 				{{#showMessage}}
 					<div class="alert alert-success alert-dismissible fade show" role="alert">
 						{{message}}
@@ -40,7 +40,7 @@
 
 				<div class="filter-shop d-flex flex-wrap justify-content-between mb-5">
 					<div class="showing-product">
-						<p>Showing {{from}}-{{to}} of {{noOfArticles}} results</p>
+						<p>Showing {{from}}-{{to}} of {{numOfArticles}} results</p>
 					</div>
 					<div class="sort-by">
 						<select id="sorting" class="form-select" data-filter-sort="" data-filter-order="">
@@ -57,9 +57,9 @@
 					</div>
 				</div>
 
-				<div class="row product-content product-store">
+				<div class="product-content product-store row row-cols-lg-5 row-cols-md-3 row-cols-sm-2 row-cols-1">
 					{{#articles}}
-						<div class="col-lg-3 col-md-4 mb-4">
+						<div class="col">
 							<div class="card position-relative p-4 border rounded-3">
 								<img src="{{image}}" class="img-fluid shadow-sm" alt="product item">
 								<h6 class="mt-4 mb-0 fw-bold"><a href="#">{{title}}</a></h6>

@@ -398,3 +398,84 @@ Follow these steps to implement the bookshop:
    ```
 7. The card page should be fully functional, now, and look similar to this:<br/>
    ![cart page](src/main/resources/screenshots/cart-page.png)
+
+## 7. Handle pagination on the overview page
+Now, we can see all 209 books from the [CSV file](src/main/resources/books.csv) but these are too many entries at once. To handle this, we introduce a `pagination`, i.e. show only 15 books at once and offer a navigation to the next / previous page.
+
+### Control pagination via request parameter
+1. We want to control the pagination via the URL parameter `page`. So we use a request parameter in our `homePage` method. 
+   ```java
+   @GetMapping(value = {"/index.html"})
+   public String homePage(Model model, @RequestParam(name = "page", required = false) Integer page)
+   ```
+2. We want to memorize the selected page when the user returns from another page, so we store it in the session. If there is a `page` request parameter at the same time, then it should be used. If none of both is present, use a default value. We handle this logic in the `getSessionParam()` method:
+   ```java
+   Integer getSessionParam(HttpSession session, String paramName, Integer paramValue, Integer defaultValue)
+   ```
+3. Next, we create a method that handles the pagination of the articles array: 
+   ```java
+   handlePagination(Model model, Integer page)
+   ```
+### Display 'from', 'to' and total number of articles
+1. We need to calculate the `from` and `to` index to be able to return the proper sublist of articles.   
+   ```java
+   int numOfArticles = shop.getNumOfArticles();
+   int from = Math.max((page - 1) * PAGE_SIZE, 0);
+   int to = Math.min(numOfArticles, from + PAGE_SIZE);
+   List<Book> articles = shop.getArticles().subList(from, to);
+   ```
+2. We add all this attributes to the view model:   
+   ```java
+   model.addAttribute("from", ++from);
+   model.addAttribute("to", to);
+   model.addAttribute("numOfArticles", numOfArticles);
+   model.addAttribute("articles", articles);
+   ```
+3. In [index.html](src/main/resources/templates/index.html), scroll to the `showing-product` section and insert this Mustache code:
+   ```handlebars
+   <div class="showing-product">
+     <p>Showing {{from}}-{{to}} of {{numOfArticles}} results</p>
+   </div>
+   ```
+4. Test it by using different `page` parameters in your browser, e.g. http://localhost:8080/index.html?page=2. It should display the proper from/to values:<br/>
+   ![Proper from-to display](src/main/resources/screenshots/from-to-display.png)
+
+### Create pagination links
+As Mustache doesn't handle logic, we have to implement it in the controller. 
+1. To do so, we will use a Map with the `pageNumber` as key and the current page's `active` state as value. 
+   ```java
+   int pageCount = (numOfArticles / PAGE_SIZE) + 1;
+   Map<Integer, String> pages = new HashMap<>();
+   for(int pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
+     String active = (pageNumber == page) ? "active" : "";
+     pages.put(pageNumber, active);
+   }
+   ```
+2. We also need page values for the `previous` and `next` page links. We add all this attributes to the view model:
+   ```java
+   model.addAttribute("pageCount", pageCount);
+   model.addAttribute("pages", pages.entrySet());
+   model.addAttribute("prevPage", Math.max(page - 1, 1));
+   model.addAttribute("nextPage", Math.min(page + 1, pageCount));
+   ```
+3. To show the pagination links, scroll to the `Page navigation` section in [pagination.html](src/main/resources/templates/partials/pagination.html) and insert this code:
+   ```handlebars
+   <nav class="py-5" aria-label="Page navigation">
+     <ul class="pagination justify-content-center gap-4">
+       <li class="page-item">
+         <a class="page-link" href="?page={{prevPage}}">&lt;</a>
+       </li>
+       {{#pages}}
+         <li class="page-item">
+           <a class="page-link {{value}}" href="?page={{key}}">{{key}}</a>
+         </li>
+       {{/pages}}
+       <li class="page-item">
+         <a class="page-link" href="?page={{nextPage}}">&gt;</a>
+       </li>
+     </ul>
+   </nav>
+   ```
+4. The result should look like this:<br/>
+   ![Pagination screenshot](src/main/resources/screenshots/pagination.png)   
+5. Test the proper pagination by clicking the links!

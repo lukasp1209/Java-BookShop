@@ -19,11 +19,10 @@ public class Book extends Article {
         this.author = author;
     }
 
-    public Book(String title, String author, String publisher, String genre, int pages, double price, String image) {
+    public Book(String title, String author, String publisher, String genre, double price, String image) {
         super("Description will follow...", publisher, price, image);
         this.title = title;
         this.author = author;
-        this.pages = pages;
         this.format = Format.PAPERBACK;
         this.genre = Genre.fromString(genre);
     }
