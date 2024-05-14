@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 
@@ -43,6 +44,17 @@ public class ShopController {
         handleSortingPagination(view, sort, page);
         getCartItems(view);
         return "index";
+    }
+
+    @GetMapping(value = {"/details.html"})
+    public String detailsPage(Model view,
+                              @RequestParam(name = "id") Integer id,
+                              RedirectAttributes atts) {
+        // TODO: 1. get the article with the {id} article number from the shop
+        // 2. if it exists, add it to the view attributes as 'book'
+        // 3. if it doesn't, show an error message using 'atts.addFlashAttribute()'
+        getCartItems(view);
+        return "details";
     }
 
     @GetMapping(value = {"/{name}.html"})
@@ -87,7 +99,7 @@ public class ShopController {
     /**
      * Delivers the articles sublist corresponding to the selected page
      *
-     * @param view   {@link Model}
+     * @param view    {@link Model}
      * @param sorting {@link Sorting}
      * @param page    {@link Integer}
      */

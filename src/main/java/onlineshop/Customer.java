@@ -1,11 +1,14 @@
 package onlineshop;
 
 import onlineshop.enums.Gender;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 
+@Component
 public class Customer {
     /**
      * Generates a new customer number for each customer
@@ -22,6 +25,7 @@ public class Customer {
     protected Gender gender;
     protected LocalDate birthDate;
     protected Cart cart;
+    protected List<Order> orders;
 
     public Customer() {
         this.customerNo = customerCounter++;
@@ -36,4 +40,11 @@ public class Customer {
         this.cart = cart;
     }
 
+    public void placeOrder(Order order) {
+        // TODO: add an order to the 'orders'
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
 }

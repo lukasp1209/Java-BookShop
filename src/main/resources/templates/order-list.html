@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>List of Orders</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	{{> partials/htmlHead }}
+</head>
+<body>
+{{> partials/header }}
+
+<section class="hero-section position-relative padding-small"
+				 style="background-image: url(/images/banner-image-bg-1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+	<div class="hero-content">
+		<div class="container">
+			<div class="row">
+				<div class="text-center">
+					<h1>List of Orders</h1>
+					<div class="breadcrumbs">
+						<span class="item">
+							<a href="index.html">Home > </a>
+						</span>
+						<span class="item text-decoration-underline">List of Orders</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="cart padding-small">
+	<div class="container">
+		<div class="row">
+			<main class="col-md-9">
+				{{#showMessage}}
+					<div class="alert alert-success alert-dismissible fade show" role="alert">
+						{{message}}
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				{{/showMessage}}
+
+				<div class="cart-table">
+					<div class="cart-header border-bottom border-top">
+						<div class="row d-flex text-capitalize">
+							<h4 class="col-lg-2 py-3 m-0">Order no.</h4>
+							<h4 class="col-lg-2 py-3 m-0">Date</h4>
+							<h4 class="col-lg-4 py-3 m-0">Address</h4>
+							<h4 class="col-lg-2 py-3 m-0">No. of Items</h4>
+							<h4 class="col-lg-2 py-3 m-0">Total</h4>
+						</div>
+					</div>
+
+					<div class="cart-item border-bottom padding-small">
+						<div class="row align-items-center">
+							<div class="col-lg-2 col-md-3">
+								{Order no.}
+							</div>
+							<div class="col-lg-2 col-md-3">
+								{Order Date}
+							</div>
+							<div class="col-lg-4 col-md-3">
+								{Shipping Address}<br/>
+								Add a hyperlink to the order, here.
+							</div>
+							<div class="col-lg-2 col-md-3">
+								{No. of Items}
+							</div>
+							<div class="col-lg-2 col-md-3">
+								{Total}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="cart-totals padding-small pb-0">
+					<h3 class="mb-3">Cart Totals</h3>
+					<div class="total-price pb-3">
+						<table cellspacing="0" class="table text-capitalize">
+							<tbody>
+							<tr class="order-total pt-2 pb-2 border-bottom">
+								<th>Total</th>
+								<td data-title="Total">
+                      <span class="price-amount amount text-primary ps-5 fw-light">
+                        <bdi>
+                          <span class="price-currency-symbol">$</span>{grandTotal}
+												</bdi>
+                      </span>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+</section>
+
+{{> partials/footer }}
+</body>
+</html>
