@@ -37,10 +37,14 @@ public class CartController {
     }
 
     @GetMapping(value = {"/increase/{articleNo}"})
-    public String increaseQuantity(@PathVariable(name = "articleNo") Integer articleNo) {
+    public String increaseQuantity(@PathVariable(name = "articleNo") Integer articleNo, RedirectAttributes atts) {
+        String message = "Book with article no. \"" + articleNo + "\" not found.";
         Book book = shop.getArticleByNumber(articleNo);
         if (book != null) {
-            cart.addArticle(book);
+            cart.increaseQuantity(book.getArticleNo());
+        } else {
+            atts.addFlashAttribute(MESSAGE, message);
+            atts.addFlashAttribute(SHOW_MESSAGE, true);
         }
         return "redirect:/cart.html";
     }
