@@ -14,7 +14,6 @@ import java.io.Reader;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,7 +27,8 @@ public class Shop {
     private final static List<Book> books = new ArrayList<>(220);
 
     public static void main(String[] args) {
-        readArticles("src/main/resources/books.csv", books);
+        Shop shop = new Shop();
+        shop.readArticles("src/main/resources/books.csv");
         SpringApplication.run(Shop.class, args);
         log.info("Server started on http://localhost:8080");
     }
@@ -39,11 +39,12 @@ public class Shop {
 
     /**
      * Returns a sublist of articles
+     *
      * @param from {@link Integer}
-     * @param to {@link Integer}
+     * @param to   {@link Integer}
      * @return articlesSublist {@link List<Book>}
      */
-    public List<Book> getArticles(Sorting sorting, int from, int to) {
+    public List<Book> sortAndPaginateArticles(Sorting sorting, int from, int to) {
         sortArticles(sorting);
         return books.subList(from, to);
     }
@@ -52,13 +53,17 @@ public class Shop {
         switch (sorting) {
             case DEFAULT:
             case ALPHA_UP:
-                books.sort(Comparator.comparing(Book::getTitle)); break;
+                books.sort((a, b) -> a.getTitle().compareTo(b.getTitle()));
+                break;
             case ALPHA_DOWN:
-                books.sort(Comparator.comparing(Book::getTitle).reversed()); break;
+                books.sort((a, b) -> b.getTitle().compareTo(a.getTitle()));
+                break;
             case PRICE_UP:
-                books.sort(Comparator.comparing(Book::getPrice)); break;
+                books.sort((a, b) -> (int) (a.getPrice() * 100 - b.getPrice() * 100));
+                break;
             case PRICE_DOWN:
-                books.sort(Comparator.comparing(Book::getPrice).reversed()); break;
+                books.sort((a, b) -> (int) (b.getPrice() * 100 - a.getPrice() * 100));
+                break;
 /*
             case AUTHOR_UP:
                 books.sort(Comparator.comparing(Book::getAuthor)); break;
@@ -74,10 +79,10 @@ public class Shop {
 
     /**
      * Read articles from a CSV file
+     *
      * @param fileName {@link String}
-     * @param bookList    {@link List}
      */
-    private static void readArticles(String fileName, List<Book> bookList) {
+    void readArticles(String fileName) {
         try {
             Reader in = new FileReader(fileName);
             CSVFormat csvFormat = CSVFormat.EXCEL.withFirstRecordAsHeader().builder()
@@ -101,17 +106,17 @@ public class Shop {
                 String image = record.get("image");
                 if (image.isEmpty()) image = "/images/book-placeholder.png";
                 Book book = new Book(title, author, publisher, genre, price, image);
-                bookList.add(book);
+                books.add(book);
             }
             in.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        log.info("{} bookList imported", bookList.size());
+        log.info("{} books imported", books.size());
     }
 
     /**
-     * Gets a /book by its article number
+     * Gets an article/book by its article number
      *
      * @param articleNo {@link Integer}
      * @return existingBook {@link Book}

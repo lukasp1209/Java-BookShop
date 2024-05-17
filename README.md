@@ -5,7 +5,7 @@ It uses the [Spring Boot](https://docs.spring.io/spring-boot/docs/current/refere
 
 This is how the final shop looks like:
 
-![Book Shop Screenshot](src/main/resources/static/images/bookshop.png)<br/>
+![Book Shop Screenshot](src/main/resources/screenshots/bookshop.png)<br/>
 <br/>
 
 Follow these steps to implement the bookshop:

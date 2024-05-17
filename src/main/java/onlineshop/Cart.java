@@ -54,11 +54,19 @@ public class Cart {
         item.increaseQuantity();
     }
 
+    public boolean increaseQuantity(int articleNo) {
+        CartItem existingItem = findItem(articleNo);
+        if (existingItem != null) {
+            existingItem.increaseQuantity();
+            return true;
+        }
+        return false;
+    }
     /**
      * Decreases the quantity of an existing article.
      * If quantity sinks below 1, it removes the article and returns 'false'.
      * @param articleNo {@link Integer}
-     * @return isArticleRemoved {@link Boolean}
+     * @return isArticleNotRemoved {@link Boolean}
      */
     public boolean decreaseQuantity(int articleNo) {
         CartItem existingItem = findItem(articleNo);

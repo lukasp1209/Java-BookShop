@@ -1,11 +1,9 @@
 package onlineshop.controllers;
 
 import jakarta.servlet.http.HttpSession;
-import onlineshop.Cart;
 import onlineshop.Shop;
 import onlineshop.enums.Sorting;
 import onlineshop.merchandise.Book;
-import onlineshop.merchandise.CartItem;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +17,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.*;
 
 @Controller
-public class ShopController {
+public class ShopController extends BaseController {
     private final static Logger log = LogManager.getLogger(ShopController.class);
     public static final int PAGE_SIZE = 15;
 
     @Autowired
     Shop shop;
-
-    @Autowired
-    Cart cart;
 
     @GetMapping(value = {"/"})
     public String root() {
@@ -64,39 +59,6 @@ public class ShopController {
     }
 
     /**
-     * Loads the cart items from the cart object and stores the corresponding attributes in the view view.
-     *
-     * @param view {@link Model}
-     */
-    private void getCartItems(Model view) {
-        List<CartItem> cartItems = cart.getItems();
-        view.addAttribute("cartItems", cartItems);
-        view.addAttribute("numOfCartItems", cart.getNumOfItems());
-        view.addAttribute("grandTotal", cart.getGrandTotal());
-    }
-
-    /**
-     * Looks up the requested parameter in  the session. If it doesn't exist, it uses the default value.
-     *
-     * @param session      {@link jakarta.servlet.http.HttpSession}
-     * @param paramName    {@link String}
-     * @param paramValue   {@link Object}
-     * @param defaultValue {@link Object}
-     * @return sessionValue {@link Object}
-     */
-    private Object getSessionParam(HttpSession session,
-                                   String paramName,
-                                   Object paramValue,
-                                   Object defaultValue) {
-        if (paramValue == null) {
-            Object sessionValue = session.getAttribute(paramName);
-            paramValue = sessionValue != null ? sessionValue : defaultValue;
-        }
-        session.setAttribute(paramName, paramValue);
-        return paramValue;
-    }
-
-    /**
      * Delivers the articles sublist corresponding to the selected page
      *
      * @param view    {@link Model}
@@ -107,7 +69,7 @@ public class ShopController {
         int numOfArticles = shop.getNumOfArticles();
         int from = Math.max((page - 1) * PAGE_SIZE, 0);
         int to = Math.min(numOfArticles, from + PAGE_SIZE);
-        List<Book> articles = shop.getArticles(sorting, from, to);
+        List<Book> articles = shop.sortAndPaginateArticles(sorting, from, to);
 
         view.addAttribute("articles", articles);
         view.addAttribute("from", ++from);

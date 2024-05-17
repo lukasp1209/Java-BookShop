@@ -14,6 +14,7 @@ public class Order {
     private LocalDate deliveryDate;
     private String notes;
     private Billing billing;
+    // calculated in backend
     private double total;
 
 
@@ -27,7 +28,7 @@ public class Order {
     }
 
     public boolean placeOrder() {
-        // TODO: remove item from items
+        // TODO: place a new order
         // return 'true' if successful
         return false;
     }

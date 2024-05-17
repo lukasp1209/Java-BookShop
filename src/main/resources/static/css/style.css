@@ -1242,6 +1242,23 @@ th{
   max-height: 90px;
 }
 
+.product-store img {
+  height: 400px;
+  object-fit: cover;
+}
+@media (min-width: 576px) {
+  .product-store img { height: 300px; }
+}
+@media (min-width: 768px) {
+  .product-store img { height: 240px; }
+}
+@media (min-width: 992px) {
+  .product-store img { height: 200px; }
+}
+@media (min-width: 1200px) {
+  .product-store img { height: 300px; }
+}
+
 /*------------Swiper Pagination -----------*/
 .product-store .swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets.swiper-pagination-horizontal {
   bottom: 35px;
