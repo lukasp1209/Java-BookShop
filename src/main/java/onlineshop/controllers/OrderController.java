@@ -33,7 +33,7 @@ public class OrderController extends BaseController {
         return "redirect:/order/" + orderNumber;
     }
 
-    @PostMapping(value = "/{orderNumber}")
+    @GetMapping(value = "/{orderNumber}")
     public String showOrder(Model view, @PathVariable(name="orderNumber") Integer orderNumber) {
         // TODO: show details of order with {orderNumber}
         // 1. get order with 'orderNumber
@@ -43,8 +43,9 @@ public class OrderController extends BaseController {
     }
 
     @GetMapping(value = "/all")
-    public String listOrders() {
+    public String listOrders(Model view) {
         // TODO: list all orders of the current customer
+        getCartItems(view);
         return "order-list";
     }
 }
