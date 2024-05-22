@@ -37,8 +37,26 @@ public class ShopController extends BaseController {
         page = (Integer) getSessionParam(session, "page", page, 1);
         sort = (Sorting) getSessionParam(session, "sort", sort, Sorting.ALPHA_UP);
         handleSortingPagination(view, sort, page);
-        getCartItems(view);
+        loadCartItems(view);
         return "index";
+    }
+
+    @GetMapping(value = {"/checkout.html"})
+    public String checkout(Model view) {
+        loadCartItems(view);
+
+        // TODO: calculate in Order
+        double subTotal = Double.parseDouble(cart.getGrandTotal());
+        double shippingCosts = 3.99;
+        double taxRate = 0.07;
+        double taxes = subTotal * taxRate;
+        double grandTotal = subTotal + shippingCosts + taxes;
+
+        view.addAttribute("subTotal", cart.getGrandTotal());
+        view.addAttribute("shippingCosts", shippingCosts);
+        view.addAttribute("taxes", Shop.df.format(taxes));
+        view.addAttribute("grandTotal", Shop.df.format(grandTotal));
+        return "checkout";
     }
 
     @GetMapping(value = {"/details.html"})
@@ -48,13 +66,13 @@ public class ShopController extends BaseController {
         // TODO: 1. get the article with the {id} article number from the shop
         // 2. if it exists, add it to the view attributes as 'book'
         // 3. if it doesn't, show an error message using 'atts.addFlashAttribute()'
-        getCartItems(view);
+        loadCartItems(view);
         return "details";
     }
 
     @GetMapping(value = {"/{name}.html"})
     public String htmlMapping(Model view, @PathVariable(name = "name") String name) {
-        getCartItems(view);
+        loadCartItems(view);
         return name;
     }
 
@@ -91,6 +109,11 @@ public class ShopController extends BaseController {
         createSortingLinks(view, sorting);
     }
 
+    /**
+     * Creates the model for the sorting drop down
+     * @param view {@link Model} - the Spring ViewModel
+     * @param currentSort {@link Sorting} - the current sorting
+     */
     private void createSortingLinks(Model view, Sorting currentSort) {
         List<Sorting> sortings = new ArrayList<>();
         for (Sorting entry : Sorting.values()) {

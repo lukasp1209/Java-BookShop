@@ -9,6 +9,7 @@ import java.util.List;
 
 @Component
 public class Order {
+    private Integer orderNo;
     private List<OrderItem> items = new ArrayList<>();
     private LocalDate orderDate;
     private LocalDate deliveryDate;

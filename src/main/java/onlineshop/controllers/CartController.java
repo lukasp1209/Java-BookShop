@@ -13,10 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value = "/cart")
-public class CartController {
-    public static final String MESSAGE = "message";
-    public static final String SHOW_MESSAGE = "showMessage";
-
+public class CartController extends BaseController {
     @Autowired
     Shop shop;
 
@@ -31,8 +28,7 @@ public class CartController {
             cart.addArticle(book);
             message = "Article \"" + book.getTitle() + "\" added to cart.";
         }
-        atts.addFlashAttribute(MESSAGE, message);
-        atts.addFlashAttribute(SHOW_MESSAGE, true);
+        showMessage(atts, message);
         return "redirect:/index.html";
     }
 
@@ -43,8 +39,7 @@ public class CartController {
         if (book != null) {
             cart.increaseQuantity(book.getArticleNo());
         } else {
-            atts.addFlashAttribute(MESSAGE, message);
-            atts.addFlashAttribute(SHOW_MESSAGE, true);
+            showMessage(atts, message);
         }
         return "redirect:/cart.html";
     }
@@ -52,9 +47,9 @@ public class CartController {
     @GetMapping(value = {"/decrease/{articleNo}"})
     public String decreaseQuantity(@PathVariable(name = "articleNo") Integer articleNo, RedirectAttributes atts) {
         Article article = shop.getArticleByNumber(articleNo);
+        String message = "Article '" + article.getTitle() + "' removed from cart.";
         if (!cart.decreaseQuantity(articleNo)) {
-            atts.addFlashAttribute(MESSAGE, "Article \"" + article.getTitle() + "\" removed from cart.");
-            atts.addFlashAttribute(SHOW_MESSAGE, true);
+            showMessage(atts, message);
         }
         return "redirect:/cart.html";
     }
@@ -66,8 +61,7 @@ public class CartController {
         if (article != null && cart.removeArticle(articleNo)) {
             message = "Article \"" + article.getTitle() + "\" removed from cart.";
         }
-        atts.addFlashAttribute(MESSAGE, message);
-        atts.addFlashAttribute(SHOW_MESSAGE, true);
+        showMessage(atts, message);
         return "redirect:/cart.html";
     }
 }
