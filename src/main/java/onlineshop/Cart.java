@@ -11,6 +11,7 @@ import java.util.List;
 @Component
 @SessionScope
 public class Cart {
+    final static int MAX_QUANTITY = 15;
     private List<CartItem> items = new ArrayList<>();
 
     public List<CartItem> getItems() {
@@ -51,7 +52,10 @@ public class Cart {
             item = new CartItem(book);
             items.add(item);
         }
-        item.increaseQuantity();
+        // limit quantity
+        if (item.getQuantity() <= MAX_QUANTITY) {
+            item.increaseQuantity();
+        }
     }
 
     public boolean increaseQuantity(int articleNo) {
@@ -62,6 +66,7 @@ public class Cart {
         }
         return false;
     }
+
     /**
      * Decreases the quantity of an existing article.
      * If quantity sinks below 1, it removes the article and returns 'false'.

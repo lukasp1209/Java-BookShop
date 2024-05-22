@@ -1,6 +1,7 @@
 package onlineshop.merchandise;
 
 import onlineshop.Shop;
+import org.springframework.beans.BeanUtils;
 
 /**
  * Represents an article/book in the shopping cart
@@ -12,16 +13,7 @@ public class CartItem extends Book {
     }
 
     public CartItem(Book book) {
-        this.articleNo = book.articleNo;
-        this.title = book.title;
-        this.manufacturer = book.manufacturer;
-        this.price = book.price;
-        this.image = book.image;
-
-        this.author = book.author;
-        this.pages = book.pages;
-        this.format = book.format;
-        this.genre = book.genre;
+        BeanUtils.copyProperties(book, this);
     }
 
     public int getQuantity() {

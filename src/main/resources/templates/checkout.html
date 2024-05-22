@@ -6,7 +6,7 @@
 	<meta name="description" content="">
 	{{> partials/htmlHead }}
 
-	<script>
+	<script type="text/javascript">
 		function validateForm(form) {
 			form.classList.add('was-validated')
 			return form.checkValidity()
@@ -101,11 +101,11 @@
 								<tr class="subtotal pt-2 pb-2 border-bottom">
 									<th>Subtotal</th>
 									<td data-title="Subtotal">
-                          <span class="price-amount amount text-primary ps-5 fw-light">
-                            <bdi>
-                              <span class="price-currency-symbol">$</span>{subTotal}
-                            </bdi>
-                          </span>
+										<span class="price-amount amount text-primary ps-5 fw-light">
+											<bdi>
+												<span class="price-currency-symbol">$</span>{{subTotal}}
+											</bdi>
+										</span>
 									</td>
 								</tr>
 								<tr class="subtotal pt-2 pb-2 border-top border-bottom">
@@ -113,7 +113,7 @@
 									<td data-title="Shipping">
                           <span class="price-amount amount text-primary ps-5 fw-light">
                             <bdi>
-                              <span class="price-currency-symbol">$</span>{shippingCost}
+                              <span class="price-currency-symbol">$</span>{{shippingCosts}}
                             </bdi>
                           </span>
 									</td>
@@ -123,7 +123,7 @@
 									<td data-title="Shipping">
                           <span class="price-amount amount text-primary ps-5 fw-light">
                             <bdi>
-                              <span class="price-currency-symbol">$</span>{taxes}
+                              <span class="price-currency-symbol">$</span>{{taxes}}
                             </bdi>
                           </span>
 									</td>
@@ -140,20 +140,20 @@
 								</tbody>
 							</table>
 						</div>
+
 						<div class="list-group">
 							<h3 class="">Payment method</h3>
 							<label class="list-group-item d-flex gap-2 border-0">
 								<input class="form-check-input flex-shrink-0" type="radio" name="paymentMethod"
-											 id="listGroupRadios1" value="">
+											 id="listGroupRadios1" value="CREDITCARD" required>
 								<span>
                       <p class="mb-1">Credit card</p>
                       <small>Credit card details will be required, later.</small>
                     </span>
 							</label>
-
 							<label class="list-group-item d-flex gap-2 border-0">
 								<input class="form-check-input flex-shrink-0" type="radio" name="paymentMethod"
-											 id="listGroupRadios2" value="BANK_TRANSFER">
+											 id="listGroupRadios2" value="BANK_TRANSFER" required>
 								<span>
                       <p class="mb-1">Direct bank transfer</p>
                       <small>Make your payment directly into our bank account. Please use your Order ID. Your order will
@@ -162,7 +162,7 @@
 							</label>
 							<label class="list-group-item d-flex gap-2 border-0">
 								<input class="form-check-input flex-shrink-0" type="radio" name="paymentMethod"
-											 id="listGroupRadios3" value="CHECK">
+											 id="listGroupRadios3" value="CHECK" required>
 								<span>
                       <p class="mb-1">Check payments</p>
                       <small>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store
@@ -171,11 +171,11 @@
 							</label>
 							<label class="list-group-item d-flex gap-2 border-0">
 								<input class="form-check-input flex-shrink-0" type="radio" name="paymentMethod"
-											 id="listGroupRadios4" value="PAYPAL">
+											 id="listGroupRadios4" value="PAYPAL" required>
 								<span>
-                      <p class="mb-1">Paypal</p>
-                      <small>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</small>
-                    </span>
+									<p class="mb-1">Paypal</p>
+									<small>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</small>
+								</span>
 							</label>
 						</div>
 					</div>
@@ -192,7 +192,7 @@
 
 						<div class="mb-3">
 							<label for="lastName">Last Name*</label>
-							<input type="text" id="lastName" name="lastName" id="lastName" class="form-control mt-2 ps-3" required>
+							<input type="text" name="lastName" id="lastName" class="form-control mt-2 ps-3" required>
 							<span class="invalid-feedback">Please enter your last name</span>
 						</div>
 
@@ -266,12 +266,12 @@
 												placeholder="Notes about your order. Like special notes for delivery."></textarea>
 						</div>
 					</div>
+					<div class="button-wrap mt-3">
+						<button type="submit" class="btn">Place order</button>
+					</div>
 
 				</div>
 
-				<div class="button-wrap mt-3">
-					<button type="submit" name="submit" class="btn">Place order</button>
-				</div>
 			</div>
 		</form>
 	</div>

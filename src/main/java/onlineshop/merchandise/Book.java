@@ -31,7 +31,23 @@ public class Book extends Article {
         return author;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public int getPages() {
         return pages;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
+
+    public void setFormat(Format format) {
+        this.format = format;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 }

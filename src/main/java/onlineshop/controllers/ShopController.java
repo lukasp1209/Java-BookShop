@@ -41,6 +41,23 @@ public class ShopController extends BaseController {
         return "index";
     }
 
+    @GetMapping(value = {"/checkout.html"})
+    public String checkout(Model view) {
+        getCartItems(view);
+
+        double subTotal = Double.parseDouble(cart.getGrandTotal());
+        double shippingCosts = 3.99;
+        double taxRate = 0.07;
+        double taxes = subTotal * taxRate;
+        double grandTotal = subTotal + shippingCosts + taxes;
+
+        view.addAttribute("subTotal", cart.getGrandTotal());
+        view.addAttribute("shippingCosts", shippingCosts);
+        view.addAttribute("taxes", Shop.df.format(taxes));
+        view.addAttribute("grandTotal", Shop.df.format(grandTotal));
+        return "checkout";
+    }
+
     @GetMapping(value = {"/details.html"})
     public String detailsPage(Model view,
                               @RequestParam(name = "id") Integer id,
@@ -91,6 +108,11 @@ public class ShopController extends BaseController {
         createSortingLinks(view, sorting);
     }
 
+    /**
+     * Creates the model for the sorting drop down
+     * @param view {@link Model} - the Spring ViewModel
+     * @param currentSort {@link Sorting} - the current sorting
+     */
     private void createSortingLinks(Model view, Sorting currentSort) {
         List<Sorting> sortings = new ArrayList<>();
         for (Sorting entry : Sorting.values()) {
