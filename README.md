@@ -624,3 +624,65 @@ The last step is to trigger the change the search parameters in the URL as soon 
    ```
 4. Congratulations! Now it's time to thoroughly test the sorting in your browser!<br/>
    ![sorted-by-price.png](src/main/resources/screenshots/sorted-by-price.png)
+
+## 9. Checkout functionality
+### List the cart items
+1. Add a new `checkout()` method that prepares the view model for the checkout page. Calculate all necessary fields.
+   ```java
+    @GetMapping(value = {"/checkout.html"})
+    public String checkout(Model view) {
+        loadCartItems(view);
+
+        double subTotal = Double.parseDouble(cart.getGrandTotal());
+        double discount = subTotal * 0.05;
+        double shippingCosts = 3.99;
+        double taxRate = 0.07;
+        double taxes = subTotal * taxRate;
+        double grandTotal = subTotal - discount + shippingCosts + taxes;
+
+        view.addAttribute("subTotal", cart.getGrandTotal());
+        view.addAttribute("discount", Shop.df.format(discount));
+        view.addAttribute("shippingCosts", shippingCosts);
+        view.addAttribute("taxes", Shop.df.format(taxes));
+        view.addAttribute("grandTotal", Shop.df.format(grandTotal));
+        return "checkout";
+    }
+   ```
+2. Integrate the cart items in the [checkout.html](src/main/resources/templates/checkout.html) page.
+   ```handlebars
+   {{#cartItems}}
+   <div class="border-bottom">
+       <div class="row align-items-center">
+           <div class="col-5">
+               <img src="{{image}}" alt="{{title}}" class="img-fluid border rounded-3">
+               <h5 class="mt-2"><a href="/details/{{articleNo}}">{{title}}</a></h5>
+               <span class="price text-primary fw-light">${{price}}</span>
+           </div>
+   
+           <div class="col-3">
+               <span class="fw-light">{{quantity}}</span>
+           </div>
+   
+           <div class="col-4">
+               <span class="money fw-light text-primary">${{totalPriceFormatted}}</span>
+           </div>
+       </div>
+   </div>
+   {{/cartItems}}
+   ```
+3. The result should look like this:<br/>
+   ![checkout-items.png](src/main/resources/screenshots/checkout-items.png)
+4. Display the order's subtotal.
+   ```html
+   <tr class="subtotal border-bottom">
+     <th>Subtotal</th>
+     <td data-title="Subtotal">
+       <span class="price-amount amount text-primary">
+         <bdi><span class="price-currency-symbol">$</span>{{subTotal}}</bdi>
+       </span>
+     </td>
+   </tr>
+   ```
+   Repeat this for discount, shipping, taxes and grand total.
+5. The result should look like this:<br/>
+   ![checkout-numbers.png](src/main/resources/screenshots/checkout-numbers.png)

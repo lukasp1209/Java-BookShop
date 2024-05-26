@@ -47,12 +47,14 @@ public class ShopController extends BaseController {
 
         // TODO: calculate in Order
         double subTotal = Double.parseDouble(cart.getGrandTotal());
+        double discount = subTotal * 0.05;
         double shippingCosts = 3.99;
         double taxRate = 0.07;
         double taxes = subTotal * taxRate;
-        double grandTotal = subTotal + shippingCosts + taxes;
+        double grandTotal = subTotal - discount + shippingCosts + taxes;
 
         view.addAttribute("subTotal", cart.getGrandTotal());
+        view.addAttribute("discount", Shop.df.format(discount));
         view.addAttribute("shippingCosts", shippingCosts);
         view.addAttribute("taxes", Shop.df.format(taxes));
         view.addAttribute("grandTotal", Shop.df.format(grandTotal));
