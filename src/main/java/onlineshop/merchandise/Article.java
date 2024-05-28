@@ -2,7 +2,7 @@ package onlineshop.merchandise;
 
 public class Article {
   /** Unique article number */
-  protected int articleNo;
+  protected int id;
   /** Display-title of this Article */
   protected String title;
   /** Manufacturer of this Article */
@@ -35,11 +35,11 @@ public class Article {
   }
 
   public int getArticleNo() {
-    return articleNo;
+    return id;
   }
 
-  public void setArticleNo(int articleNo) {
-    this.articleNo = articleNo;
+  public void setArticleNo(int id) {
+    this.id = id;
   }
 
   public String getManufacturer() {

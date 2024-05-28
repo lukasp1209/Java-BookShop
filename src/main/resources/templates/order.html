@@ -10,7 +10,7 @@
 {{> partials/header }}
 
 <section class="hero-section position-relative padding-small"
-				 style="background-image: url(/images/banner-image-bg-1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+				 style="background-image: url(/images/banner-image-bg-1.jpg); color: white; background-size: cover; background-repeat: no-repeat; background-position: center;">
 	<div class="hero-content">
 		<div class="container">
 			<div class="row">
@@ -18,7 +18,7 @@
 					<h1>Order Confirmation</h1>
 					<div class="breadcrumbs">
 						<span class="item">
-							<a href="index.html">Home > </a>
+							<a style="color: white;" href="index.html">Home > </a>
 						</span>
 						<span class="item text-decoration-underline">Order Confirmation</span>
 					</div>
@@ -55,12 +55,12 @@
 									<div class="cart-info d-flex gap-2 flex-wrap align-items-center">
 										<div class="col-lg-5">
 											<div class="card-image">
-												<img src="{{image}}" alt="{{title}}" class="img-fluid border rounded-3">
+												<img src="{{image}}" alt="{{model}}" class="img-fluid border rounded-3">
 											</div>
 										</div>
 										<div class="col-lg-6">
 											<div class="card-detail">
-												<h5 class="mt-2"><a href="/details/{{articleNo}}">{{title}}</a></h5>
+												<h5 class="mt-2"><a href="/details/{{id}}">{{model}}</a></h5>
 												<div class="card-price">
 													<span class="price text-primary fw-light" data-currency-usd="${{price}}">${{price}}</span>
 												</div>

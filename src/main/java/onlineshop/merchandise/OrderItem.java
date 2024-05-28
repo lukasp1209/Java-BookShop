@@ -5,9 +5,9 @@ public class OrderItem extends CartItem {
     private double shippingCost;
     private double taxAmount;
 
-    public OrderItem() { }
 
     public OrderItem(CartItem cartItem) {
+        super();
         // TODO: implement this
     }
 

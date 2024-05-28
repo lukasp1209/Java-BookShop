@@ -3,7 +3,7 @@ package onlineshop.controllers;
 import onlineshop.Cart;
 import onlineshop.Shop;
 import onlineshop.merchandise.Article;
-import onlineshop.merchandise.Book;
+import onlineshop.merchandise.Car;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,55 +13,61 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value = "/cart")
-public class CartController extends BaseController {
+public class CartController {
+    public static final String MESSAGE = "message";
+    public static final String SHOW_MESSAGE = "showMessage";
+
     @Autowired
     Shop shop;
 
     @Autowired
     Cart cart;
 
-    @GetMapping(value = {"/add/{articleNo}"})
-    public String addToCart(@PathVariable(name = "articleNo") Integer articleNo, RedirectAttributes atts) {
-        String message = "Book with article no. \"" + articleNo + "\" not found.";
-        Book book = shop.getArticleByNumber(articleNo);
-        if (book != null) {
-            cart.addArticle(book);
-            message = "Article \"" + book.getTitle() + "\" added to cart.";
+    @GetMapping(value = {"/add/{id}"})
+    public String addToCart(@PathVariable(name = "id") Integer id, RedirectAttributes atts) {
+        String message = "Car with article no. \"" + id + "\" not found.";
+        Car car = shop.getArticleByNumber(id);
+        if (car != null) {
+            cart.addArticle(car);
+            message = "Article \"" + car.getModel() + "\" added to cart.";
         }
-        showMessage(atts, message);
+        atts.addFlashAttribute(MESSAGE, message);
+        atts.addFlashAttribute(SHOW_MESSAGE, true);
         return "redirect:/index.html";
     }
 
-    @GetMapping(value = {"/increase/{articleNo}"})
-    public String increaseQuantity(@PathVariable(name = "articleNo") Integer articleNo, RedirectAttributes atts) {
-        String message = "Book with article no. \"" + articleNo + "\" not found.";
-        Book book = shop.getArticleByNumber(articleNo);
-        if (book != null) {
-            cart.increaseQuantity(book.getArticleNo());
+    @GetMapping(value = {"/increase/{id}"})
+    public String increaseQuantity(@PathVariable(name = "id") Integer id, RedirectAttributes atts) {
+        String message = "Car with article no. \"" + id + "\" not found.";
+        Car car = shop.getArticleByNumber(id);
+        if (car != null) {
+            cart.increaseQuantity(car.getId());
         } else {
-            showMessage(atts, message);
+            atts.addFlashAttribute(MESSAGE, message);
+            atts.addFlashAttribute(SHOW_MESSAGE, true);
         }
         return "redirect:/cart.html";
     }
 
-    @GetMapping(value = {"/decrease/{articleNo}"})
-    public String decreaseQuantity(@PathVariable(name = "articleNo") Integer articleNo, RedirectAttributes atts) {
-        Article article = shop.getArticleByNumber(articleNo);
-        String message = "Article '" + article.getTitle() + "' removed from cart.";
-        if (!cart.decreaseQuantity(articleNo)) {
-            showMessage(atts, message);
+    @GetMapping(value = {"/decrease/{id}"})
+    public String decreaseQuantity(@PathVariable(name = "id") Integer id, RedirectAttributes atts) {
+        Car article = shop.getArticleByNumber(id);
+        if (!cart.decreaseQuantity(id)) {
+            atts.addFlashAttribute(MESSAGE, "Article \"" + article.getModel() + "\" removed from cart.");
+            atts.addFlashAttribute(SHOW_MESSAGE, true);
         }
         return "redirect:/cart.html";
     }
 
-    @GetMapping(value = {"/remove/{articleNo}"})
-    public String removeFromCart(@PathVariable(name = "articleNo") Integer articleNo, RedirectAttributes atts) {
-        String message = "Article with article no. \"" + articleNo + "\" not found in cart.";
-        Article article = shop.getArticleByNumber(articleNo);
-        if (article != null && cart.removeArticle(articleNo)) {
-            message = "Article \"" + article.getTitle() + "\" removed from cart.";
+    @GetMapping(value = {"/remove/{id}"})
+    public String removeFromCart(@PathVariable(name = "id") Integer id, RedirectAttributes atts) {
+        String message = "Article with article no. \"" + id + "\" not found in cart.";
+        Car article = shop.getArticleByNumber(id);
+        if (article != null && cart.removeArticle(id)) {
+            message = "Article \"" + article.getModel() + "\" removed from cart.";
         }
-        showMessage(atts, message);
+        atts.addFlashAttribute(MESSAGE, message);
+        atts.addFlashAttribute(SHOW_MESSAGE, true);
         return "redirect:/cart.html";
     }
 }

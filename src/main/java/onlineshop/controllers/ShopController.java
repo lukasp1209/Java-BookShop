@@ -3,7 +3,7 @@ package onlineshop.controllers;
 import jakarta.servlet.http.HttpSession;
 import onlineshop.Shop;
 import onlineshop.enums.Sorting;
-import onlineshop.merchandise.Book;
+import onlineshop.merchandise.Car;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,24 +37,21 @@ public class ShopController extends BaseController {
         page = (Integer) getSessionParam(session, "page", page, 1);
         sort = (Sorting) getSessionParam(session, "sort", sort, Sorting.ALPHA_UP);
         handleSortingPagination(view, sort, page);
-        loadCartItems(view);
+        getCartItems(view);
         return "index";
     }
 
     @GetMapping(value = {"/checkout.html"})
     public String checkout(Model view) {
-        loadCartItems(view);
+        getCartItems(view);
 
-        // TODO: calculate in Order
         double subTotal = Double.parseDouble(cart.getGrandTotal());
-        double discount = subTotal * 0.05;
         double shippingCosts = 3.99;
         double taxRate = 0.07;
         double taxes = subTotal * taxRate;
-        double grandTotal = subTotal - discount + shippingCosts + taxes;
+        double grandTotal = subTotal + shippingCosts + taxes;
 
         view.addAttribute("subTotal", cart.getGrandTotal());
-        view.addAttribute("discount", Shop.df.format(discount));
         view.addAttribute("shippingCosts", shippingCosts);
         view.addAttribute("taxes", Shop.df.format(taxes));
         view.addAttribute("grandTotal", Shop.df.format(grandTotal));
@@ -68,13 +65,13 @@ public class ShopController extends BaseController {
         // TODO: 1. get the article with the {id} article number from the shop
         // 2. if it exists, add it to the view attributes as 'book'
         // 3. if it doesn't, show an error message using 'atts.addFlashAttribute()'
-        loadCartItems(view);
+        getCartItems(view);
         return "details";
     }
 
     @GetMapping(value = {"/{name}.html"})
     public String htmlMapping(Model view, @PathVariable(name = "name") String name) {
-        loadCartItems(view);
+        getCartItems(view);
         return name;
     }
 
@@ -89,7 +86,7 @@ public class ShopController extends BaseController {
         int numOfArticles = shop.getNumOfArticles();
         int from = Math.max((page - 1) * PAGE_SIZE, 0);
         int to = Math.min(numOfArticles, from + PAGE_SIZE);
-        List<Book> articles = shop.sortAndPaginateArticles(sorting, from, to);
+        List<Car> articles = shop.sortAndPaginateArticles(sorting, from, to);
 
         view.addAttribute("articles", articles);
         view.addAttribute("from", ++from);

@@ -17,7 +17,7 @@
 {{> partials/header }}
 
 <section class="hero-section position-relative padding-small"
-				 style="background-image: url(/images/banner-image-bg-1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+				 style="background-image: url(/images/banner-image-bg-1.jpg); color: white; background-size: cover; background-repeat: no-repeat; background-position: center;">
 	<div class="hero-content">
 		<div class="container">
 			<div class="row">
@@ -25,7 +25,7 @@
 					<h1>Checkout</h1>
 					<div class="breadcrumbs">
 						<span class="item">
-							<a href="index.html">Home > </a>
+							<a style="color: white;" href="index.html">Home > </a>
 						</span>
 						<span class="item text-decoration-underline">Checkout</span>
 					</div>
@@ -59,12 +59,12 @@
 										<div class="cart-info d-flex gap-2 flex-wrap align-items-center">
 											<div class="col-lg-5">
 												<div class="card-image">
-													<img src="{{image}}" alt="{{title}}" class="img-fluid border rounded-3">
+													<img src="{{image}}" alt="{{model}}" class="img-fluid border rounded-3">
 												</div>
 											</div>
 											<div class="col-lg-6">
 												<div class="card-detail">
-													<h5 class="mt-2"><a href="/details/{{articleNo}}">{{title}}</a></h5>
+													<h5 class="mt-2"><a href="/details/{{id}}">{{model}}</a></h5>
 													<div class="card-price">
 														<span class="price text-primary fw-light" data-currency-usd="${{price}}">${{price}}</span>
 													</div>
@@ -108,45 +108,33 @@
 										</span>
 									</td>
 								</tr>
-
-								<tr class="subtotal pt-2 pb-2 border-bottom">
-									<th>Discount</th>
-									<td data-title="Discount">
-										<span class="price-amount amount text-primary ps-5 fw-light">
-											<bdi>
-												<span class="price-currency-symbol">- $</span>{{discount}}
-											</bdi>
-										</span>
-									</td>
-								</tr>
-
 								<tr class="subtotal pt-2 pb-2 border-top border-bottom">
 									<th>Shipping</th>
 									<td data-title="Shipping">
-										<span class="price-amount amount text-primary ps-5 fw-light">
-											<bdi>
-												<span class="price-currency-symbol">$</span>{{shippingCosts}}
-											</bdi>
-										</span>
+                          <span class="price-amount amount text-primary ps-5 fw-light">
+                            <bdi>
+                              <span class="price-currency-symbol">$</span>{{shippingCosts}}
+                            </bdi>
+                          </span>
 									</td>
 								</tr>
 								<tr class="subtotal pt-2 pb-2 border-top border-bottom">
 									<th>Taxes</th>
-									<td data-title="Taxes">
-										<span class="price-amount amount text-primary ps-5 fw-light">
-											<bdi>
-												<span class="price-currency-symbol">$</span>{{taxes}}
-											</bdi>
-										</span>
+									<td data-title="Shipping">
+                          <span class="price-amount amount text-primary ps-5 fw-light">
+                            <bdi>
+                              <span class="price-currency-symbol">$</span>{{taxes}}
+                            </bdi>
+                          </span>
 									</td>
 								</tr>
 								<tr class="order-total pt-2 pb-2 border-bottom">
 									<th>Grand Total</th>
 									<td data-title="Total">
-										<span class="price-amount amount text-primary ps-5 fw-light">
-											<bdi>
-												<span class="price-currency-symbol">$</span>{{grandTotal}}</bdi>
-										</span>
+                          <span class="price-amount amount text-primary ps-5 fw-light">
+                            <bdi>
+                              <span class="price-currency-symbol">$</span>{{grandTotal}}</bdi>
+                          </span>
 									</td>
 								</tr>
 								</tbody>
@@ -243,12 +231,12 @@
 							<label for="state">State (optional)</label>
 							<select name="state" id="state" class="form-select form-control mt-2" aria-label="Default select example">
 								<option value="">-- Please select --</option>
-								<option value="Florida">Florida</option>
-								<option value="New York">New York</option>
-								<option value="Chicago">Chicago</option>
-								<option value="Texas">Texas</option>
-								<option value="San Jose">San Jose</option>
-								<option value="Houston">Houston</option>
+								<option value="0">Florida</option>
+								<option value="1">New York</option>
+								<option value="2">Chicago</option>
+								<option value="3">Texas</option>
+								<option value="3">San Jose</option>
+								<option value="3">Houston</option>
 							</select>
 						</div>
 
@@ -275,13 +263,13 @@
 						<div class="billing-details">
 							<label for="notes">Order notes (optional)</label>
 							<textarea name="notes" id="notes" class="form-control pt-3 pb-3 ps-3 mt-2"
-												placeholder="Notes about your order. Like special notes for delivery.">Please leave the package in the right barn.
-							</textarea>
+												placeholder="Notes about your order. Like special notes for delivery."></textarea>
 						</div>
 					</div>
 					<div class="button-wrap mt-3">
 						<button type="submit" class="btn">Place order</button>
 					</div>
+
 				</div>
 
 			</div>

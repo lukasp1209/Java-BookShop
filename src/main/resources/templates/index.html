@@ -18,7 +18,7 @@
 {{> partials/header }}
 
 <section class="hero-section position-relative padding-small"
-				 style="background-image: url(/images/banner-image-bg-1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+				 style="background-image: url(/images/banner-image-bg-1.jpg); color: white; background-size: cover; background-repeat: no-repeat; background-position: center;">
 	<div class="hero-content">
 		<div class="container">
 			<div class="row">
@@ -26,7 +26,7 @@
 					<h1>Shop</h1>
 					<div class="breadcrumbs">
 						<span class="item">
-							<a href="index.html">Home</a>
+							<a style="color: white;" href="index.html">Home</a>
 						</span>
 					</div>
 				</div>
@@ -48,7 +48,7 @@
 
 				<div class="filter-shop d-flex flex-wrap justify-content-between mb-5">
 					<div class="showing-product">
-						<p>Showing {{from}}-{{to}} of {{numOfArticles}} results</p>
+						<p>{{from}}-{{to}} von {{numOfArticles}} Ergebnissen</p>
 					</div>
 					<div class="sort-by">
 						{{> partials/sorting }}
@@ -61,14 +61,14 @@
 							<div class="card position-relative p-4 border rounded-3">
 								<img src="{{image}}" class="card-img shadow-sm" alt="product item">
 								<h6 class="mt-4 mb-0 fw-bold">
-									<a href="details.html?id={{articleNo}}">{{title}}</a>
+									<a href="details.html?id={{id}}">{{model}}</a>
 								</h6>
 								<div class="review-content d-flex">
-									<p class="my-2 me-2 fs-6 text-black-50">{{author}}</p>
+									<p class="my-2 me-2 fs-6 text-black-50">{{brand}}</p>
 								</div>
 								<span class="price mb-2 text-primary">{{price}}$</span>
 								<div class="card-concern position-absolute start-0 end-0 d-flex gap-2">
-									<a href="/cart/add/{{articleNo}}" role="button" class="btn btn-dark"
+									<a href="/cart/add/{{id}}" role="button" class="btn btn-dark"
 										 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
 										<svg class="cart">
 											<use xlink:href="#cart"></use>

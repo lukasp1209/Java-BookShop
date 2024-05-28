@@ -1,7 +1,8 @@
 package onlineshop;
 
 import onlineshop.enums.Sorting;
-import onlineshop.merchandise.Book;
+import onlineshop.merchandise.Car;
+import onlineshop.merchandise.Car;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.logging.log4j.LogManager;
@@ -23,68 +24,72 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 @SpringBootApplication
 public class Shop {
-    public static final DecimalFormat df = new DecimalFormat("0.00", DecimalFormatSymbols.getInstance(Locale.US));
+    public static final DecimalFormat df = new DecimalFormat("0.00", DecimalFormatSymbols.getInstance(Locale.GERMAN));
     private final static Logger log = LogManager.getLogger(Shop.class);
-    private final static List<Book> books = new ArrayList<>(220);
+    private final static List<Car> cars = new ArrayList<>(220);
 
     public static void main(String[] args) {
         Shop shop = new Shop();
-        shop.readArticles("src/main/resources/books.csv");
+        shop.readArticles("src/main/resources/cars.csv");
         SpringApplication.run(Shop.class, args);
         log.info("Server started on http://localhost:8080");
     }
 
-    public List<Book> getArticles() {
-        return books;
+    public List<Car> getArticles() {
+        return cars;
     }
 
     /**
      * Returns a sublist of articles
+     *
      * @param from {@link Integer}
      * @param to   {@link Integer}
-     * @return articlesSublist {@link List<Book>}
+     * @return articlesSublist {@link List<Car>}
      */
-    public List<Book> sortAndPaginateArticles(Sorting sorting, int from, int to) {
+    public List<Car> sortAndPaginateArticles(Sorting sorting, int from, int to) {
         sortArticles(sorting);
-        return books.subList(from, to);
+        return cars.subList(from, to);
     }
 
     /**
      * Sorts the articles (i.e. the original List!) depending on the sorting
+     *
      * @param sorting {@link Sorting}
      */
     private void sortArticles(Sorting sorting) {
         switch (sorting) {
             case DEFAULT:
             case ALPHA_UP:
-                books.sort((a, b) -> a.getTitle().compareTo(b.getTitle()));
+                cars.sort((a, b) -> a.getModel().compareTo(b.getModel()));
                 break;
             case ALPHA_DOWN:
-                books.sort((a, b) -> b.getTitle().compareTo(a.getTitle()));
+                cars.sort((a, b) -> b.getModel().compareTo(a.getModel()));
                 break;
             case PRICE_UP:
-                books.sort((a, b) -> (int) (a.getPrice() * 100 - b.getPrice() * 100));
+                cars.sort((a, b) -> (int) (a.getPrice() * 100 - b.getPrice() * 100));
                 break;
             case PRICE_DOWN:
-                books.sort((a, b) -> (int) (b.getPrice() * 100 - a.getPrice() * 100));
+                cars.sort((a, b) -> (int) (b.getPrice() * 100 - a.getPrice() * 100));
                 break;
 /*
             case AUTHOR_UP:
-                books.sort(Comparator.comparing(Book::getAuthor)); break;
+                books.sort(Comparator.comparing(Car::getAuthor)); break;
             case AUTHOR_DOWN:
-                books.sort(Comparator.comparing(Book::getAuthor).reversed()); break;
+                books.sort(Comparator.comparing(Car::getAuthor).reversed()); break;
 */
         }
     }
 
     public int getNumOfArticles() {
-        return books.size();
+        return cars.size();
     }
 
     /**
      * Read articles from a CSV file
+     *
      * @param fileName {@link String}
      */
+
     void readArticles(String fileName) {
         try {
             Reader in = new FileReader(fileName);
@@ -95,44 +100,38 @@ public class Shop {
             ThreadLocalRandom random = ThreadLocalRandom.current();
 
             for (CSVRecord record : records) {
-                String title = record.get("title");
-                String author = record.get("author");
-                String publisher = record.get("publisher");
-                String genre = record.get("genre");
-
-
-                String priceString = record.get("price");
-                double price = !priceString.isEmpty() ?
-                        Double.parseDouble(priceString) :
-                        random.nextDouble(5.0, 20.01); // random price between 5 and 20$
-
-                price = Math.round(price * 100) / 100d;
-
+                Integer id = Integer.valueOf(record.get("id"));
+                String brand = record.get("brand");
+                String model = record.get("model");
+                int year = Integer.parseInt(record.get("year"));
+                String power = record.get("power");
+                double price = Double.valueOf(record.get("price"));
                 String image = record.get("image");
-                if (image.isEmpty()) image = "/images/book-placeholder.png";
+                if (image.isEmpty()) image = "/images/car-placeholder.png";
 
-                Book book = new Book(title, author, publisher, genre, price, image);
-                Integer articleNo = Integer.valueOf(record.get("id"));
-                book.setArticleNo(articleNo);
-                books.add(book);
+                Car car = new Car(id, brand, model, year, power, price, image);
+
+                cars.add(car);
             }
             in.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        log.info("{} books imported", books.size());
+        log.info("{} books imported", cars.size());
     }
 
     /**
      * Gets an article/book by its article number
-     * @param articleNo {@link Integer}
-     * @return existingBook {@link Book}
+     *
+     * @param id {@link Integer}
+     * @return existingBook {@link Car}
      */
-    public Book getArticleByNumber(int articleNo) {
-        for (Book book : books) {
-            if (book.getArticleNo() == articleNo)
-                return book;
+    public Car getArticleByNumber(int id) {
+        for (Car car : cars) {
+            if (car.getId() == id)
+                return car;
         }
         return null;
+
     }
 }

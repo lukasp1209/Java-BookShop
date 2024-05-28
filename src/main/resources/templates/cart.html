@@ -10,7 +10,7 @@
 {{> partials/header }}
 
 <section class="hero-section position-relative padding-small"
-				 style="background-image: url(/images/banner-image-bg-1.jpg); background-size: cover; background-repeat: no-repeat; background-position: center;">
+				 style="background-image: url(/images/banner-image-bg-1.jpg); color: white; background-size: cover; background-repeat: no-repeat; background-position: center;">
 	<div class="hero-content">
 		<div class="container">
 			<div class="row">
@@ -18,7 +18,7 @@
 					<h1>Cart</h1>
 					<div class="breadcrumbs">
 						<span class="item">
-							<a href="index.html">Home > </a>
+							<a style="color: white;" href="index.html">Home > </a>
 						</span>
 						<span class="item text-decoration-underline">Cart</span>
 					</div>
@@ -55,12 +55,12 @@
 									<div class="cart-info d-flex gap-2 flex-wrap align-items-center">
 										<div class="col-lg-5">
 											<div class="card-image">
-												<img src="{{image}}" alt="{{title}}" class="img-fluid border rounded-3">
+												<img src="{{image}}" alt="{{model}}" class="img-fluid border rounded-3">
 											</div>
 										</div>
 										<div class="col-lg-4">
 											<div class="card-detail">
-												<h5 class="mt-2"><a href="/details/{{articleNo}}">{{title}}</a></h5>
+												<h5 class="mt-2"><a href="/details/{{id}}">{{model}}</a></h5>
 												<div class="card-price">
 													<span class="price text-primary fw-light" data-currency-usd="${{price}}">${{price}}</span>
 												</div>
@@ -74,7 +74,7 @@
 											<div class="product-quantity my-2 my-2">
 												<div class="input-group product-qty align-items-center" style="max-width: 150px;">
 													<span class="input-group-btn">
-														<a href="/cart/decrease/{{articleNo}}">
+														<a href="/cart/decrease/{{id}}">
 															<button type="button" class="bg-white shadow border rounded-3 fw-light quantity-left-minus"
 																		data-type="minus" data-field="">
 																<svg width="16" height="16">
@@ -87,7 +87,7 @@
 																 class="form-control bg-white shadow border rounded-3 py-2 mx-2 input-number text-center"
 																 value="{{quantity}}" min="1" max="100" required>
 													<span class="input-group-btn">
-														<a href="/cart/increase/{{articleNo}}">
+														<a href="/cart/increase/{{id}}">
 															<button type="button"
 																			class="bg-white shadow border rounded-3 fw-light quantity-right-plus"
 																			data-type="plus" data-field="">
@@ -110,7 +110,7 @@
 								<div class="col-lg-1 col-md-2">
 									<div class="cart-cross-outline">
 <!--										TODO: add confirm dialog -->
-										<a href="/cart/remove/{{articleNo}}">
+										<a href="/cart/remove/{{id}}">
 											<svg class="cart-cross-outline" width="38" height="38">
 												<use xlink:href="#cart-cross-outline"></use>
 											</svg>

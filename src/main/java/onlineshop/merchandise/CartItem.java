@@ -4,16 +4,17 @@ import onlineshop.Shop;
 import org.springframework.beans.BeanUtils;
 
 /**
- * Represents an article/book in the shopping cart
+ * Represents an article/car in the shopping cart
  */
-public class CartItem extends Book {
+public class CartItem extends Car {
     private int quantity = 0;
 
     public CartItem() {
     }
 
-    public CartItem(Book book) {
-        BeanUtils.copyProperties(book, this);
+    public CartItem(Car car) {
+        super();
+        BeanUtils.copyProperties(car, this);
     }
 
     public int getQuantity() {
@@ -36,11 +37,11 @@ public class CartItem extends Book {
         quantity--;
     }
 
-    public double getSubtotal() {
+    public double getTotalPrice() {
         return quantity * price;
     }
 
     public String getTotalPriceFormatted() {
-        return Shop.df.format(getSubtotal());
+        return Shop.df.format(getTotalPrice());
     }
 }

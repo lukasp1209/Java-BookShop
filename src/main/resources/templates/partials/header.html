@@ -113,7 +113,7 @@
 	<div class="search-popup-container">
 
 		<form role="search" method="get" class="search-form" action="">
-			<input type="search" id="search-form" class="search-field" placeholder="Type and press enter" value="" name="s"/>
+			<input type="search" id="search-form" class="search-field" placeholder="Suche" value="" name="s"/>
 			<button type="submit" class="search-submit">
 				<svg class="search">
 					<use xlink:href="#search"></use>
@@ -121,32 +121,25 @@
 			</button>
 		</form>
 
-		<h5 class="cat-list-title">Browse Categories</h5>
+		<h5 class="cat-list-title">Kategorien</h5>
 
 		<ul class="cat-list">
 			<li class="cat-list-item">
-				<a href="#" title="Romance">Romance</a>
+				<a href="#" title="Sportwagen">Sportwagen</a>
 			</li>
 			<li class="cat-list-item">
-				<a href="#" title="Thriller">Thriller</a>
+				<a href="#" title="Oldtimer">Oldtimer</a>
 			</li>
 			<li class="cat-list-item">
-				<a href="#" title="Sci-fi">Sci-fi</a>
+				<a href="#" title="Rennwagen">Rennwagen</a>
 			</li>
 			<li class="cat-list-item">
-				<a href="#" title="Cooking">Cooking</a>
+				<a href="#" title="SUV">SUV</a>
 			</li>
 			<li class="cat-list-item">
-				<a href="#" title="Health">Health</a>
-			</li>
-			<li class="cat-list-item">
-				<a href="#" title="Lifestyle">Lifestyle</a>
-			</li>
-			<li class="cat-list-item">
-				<a href="#" title="Fiction">Fiction</a>
+				<a href="#" title="US-Car">US-Car</a>
 			</li>
 		</ul>
-
 	</div>
 </div>
 
@@ -154,7 +147,7 @@
 	<nav id="header-nav" class="navbar navbar-expand-lg py-3">
 		<div class="container">
 			<a class="navbar-brand" href="index.html">
-				<img src="/images/main-logo.png" class="logo">
+				<img src="/images/main-logo.png" class="logo" height="100" width="100">
 			</a>
 			<button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas"
 							data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -174,22 +167,22 @@
 					<ul id="navbar"
 							class="navbar-nav text-uppercase justify-content-start justify-content-lg-center align-items-start align-items-lg-center flex-grow-1">
 						<li class="nav-item">
-							<a class="nav-link me-4" href="/index.html">Overview</a>
+							<a class="nav-link me-4" href="/index.html">Übersicht</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link me-4" href="/cart.html">Cart</a>
+							<a class="nav-link me-4" href="/cart.html">Warenkorb</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link me-4" href="/checkout.html">Checkout</a>
+							<a class="nav-link me-4" href="/checkout.html">Zur Kasse</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link me-4" href="/order-list.html">Orders</a>
+							<a class="nav-link me-4" href="/order-list.html">Bestellungen</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link me-4" href="/contact.html">Contact</a>
+							<a class="nav-link me-4" href="/contact.html">Kontakt</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link me-4" href="/about.html">About</a>
+							<a class="nav-link me-4" href="/about.html">Über uns</a>
 						</li>
 					</ul>
 
@@ -220,12 +213,12 @@
 											<li class="list-group-item bg-transparent d-flex justify-content-between lh-sm">
 												<div>
 													<h5>
-														<a href="details.html?id={{articleNo}}">
+														<a href="details.html?id={{id}}">
 															{{#showQuantity}} {{quantity}} × {{/showQuantity}}
-															{{title}}
+															{{model}}
 														</a>
 													</h5>
-													<small>{{author}}</small>
+													<small>{{brand}}</small>
 												</div>
 												<span class="text-primary">${{totalPriceFormatted}}</span>
 											</li>

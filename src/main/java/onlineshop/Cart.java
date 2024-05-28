@@ -1,6 +1,7 @@
 package onlineshop;
 
 import onlineshop.merchandise.Book;
+import onlineshop.merchandise.Car;
 import onlineshop.merchandise.CartItem;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
@@ -37,19 +38,19 @@ public class Cart {
     public String getGrandTotal() {
         double total = 0;
         for (CartItem item : items) {
-            total += item.getSubtotal();
+            total += item.getTotalPrice();
         }
         return Shop.df.format(total);
     }
 
     /**
-     * Adds an article/book to the cart
-     * @param book {@link Book}
+     * Adds an article/car to the cart
+     * @param car {@link Book}
      */
-    public void addArticle(Book book) {
-        CartItem item = findItem(book.getArticleNo());
+    public void addArticle(Car car) {
+        CartItem item = findItem(car.getId());
         if (item == null) {
-            item = new CartItem(book);
+            item = new CartItem(car);
             items.add(item);
         }
         // limit quantity
@@ -58,8 +59,8 @@ public class Cart {
         }
     }
 
-    public boolean increaseQuantity(int articleNo) {
-        CartItem existingItem = findItem(articleNo);
+    public boolean increaseQuantity(int id) {
+        CartItem existingItem = findItem(id);
         if (existingItem != null) {
             existingItem.increaseQuantity();
             return true;
@@ -70,11 +71,11 @@ public class Cart {
     /**
      * Decreases the quantity of an existing article.
      * If quantity sinks below 1, it removes the article and returns 'false'.
-     * @param articleNo {@link Integer}
+     * @param id {@link Integer}
      * @return isArticleNotRemoved {@link Boolean}
      */
-    public boolean decreaseQuantity(int articleNo) {
-        CartItem existingItem = findItem(articleNo);
+    public boolean decreaseQuantity(int id) {
+        CartItem existingItem = findItem(id);
         if (existingItem != null) {
             existingItem.decreaseQuantity();
             if (existingItem.getQuantity() < 1) {
@@ -88,11 +89,11 @@ public class Cart {
 
     /**
      * Removes an article from the cart
-     * @param articleNo {@link Integer}
+     * @param id {@link Integer}
      * @return wasSuccesful {@link Boolean}
      */
-    public boolean removeArticle(int articleNo) {
-        CartItem existingItem = findItem(articleNo);
+    public boolean removeArticle(int id) {
+        CartItem existingItem = findItem(id);
         if (existingItem != null) {
             items.remove(existingItem);
             return true;
@@ -102,12 +103,12 @@ public class Cart {
 
     /**
      * Finds an article by its article number
-     * @param articleNo {@link Integer}
+     * @param id {@link Integer}
      * @return existingItem {@link CartItem}
      */
-    private CartItem findItem(int articleNo) {
+    private CartItem findItem(int id) {
         for (CartItem item : items) {
-            if (item.getArticleNo() == articleNo) {
+            if (item.getId() == id) {
                 return item;
             }
         }
