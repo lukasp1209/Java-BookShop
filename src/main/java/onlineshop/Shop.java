@@ -23,7 +23,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 @SpringBootApplication
 public class Shop {
-    public static final DecimalFormat df = new DecimalFormat("0.00", DecimalFormatSymbols.getInstance(Locale.GERMAN));
+    public static final DecimalFormat df = new DecimalFormat("0.00", DecimalFormatSymbols.getInstance(Locale.GERMANY));
     private final static Logger log = LogManager.getLogger(Shop.class);
     private final static List<Car> cars = new ArrayList<>(220);
 

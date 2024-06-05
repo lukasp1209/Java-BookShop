@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 	<title>Bestellbestätigung</title>
 	<meta name="keywords" content="">
@@ -26,6 +26,18 @@
 			</div>
 		</div>
 	</div>
+</section>
+<section>
+	<h1>Bestellung {{order.orderNo}}</h1>
+	<p>{{message}}</p>
+	<h2>Artikel</h2>
+	<ul>
+		<li th:each="item : ${orderItems}">
+			<span th:text="${item.name}">Artikelname</span> -
+			<span th:text="${item.price}">Preis</span>
+		</li>
+	</ul>
+	<p>Gesamtsumme: <span th:text="${total}">0.00</span></p>
 </section>
 
 <section class="cart padding-small">

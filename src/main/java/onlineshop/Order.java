@@ -1,5 +1,7 @@
 package onlineshop;
 
+import onlineshop.merchandise.Car;
+import onlineshop.merchandise.CartItem;
 import onlineshop.merchandise.OrderItem;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +22,15 @@ public class Order {
 
     public Order() {
         this.orderNo = nextOrderNo++;
+    }
+
+    public Order(Billing billing, double total) {
+        this.orderNo = nextOrderNo++;
+        this.billing = billing;
+        this.total = total;
+    }
+
+    public Order(Billing newOrder, List<CartItem> items, Object totalPrice) {
     }
 
     public void addItem(OrderItem item) {

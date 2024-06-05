@@ -10,7 +10,7 @@
 {{> partials/header }}
 
 <section class="hero-section position-relative padding-small"
-				 style="background-image: url(/images/banner-image-bg-1.jpg); color: white; background-size: cover; background-repeat: no-repeat; background-position: center;">
+		 style="background-image: url(/images/banner-image-bg-1.jpg); color: white; background-size: cover; background-repeat: no-repeat; background-position: center;">
 	<div class="hero-content">
 		<div class="container">
 			<div class="row">
@@ -33,46 +33,48 @@
 		<div class="row">
 			<main class="col-md-9">
 				{{#showMessage}}
-					<div class="alert alert-success alert-dismissible fade show" role="alert">
-						{{message}}
-						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-					</div>
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					{{message}}
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>
 				{{/showMessage}}
 
 				<div class="cart-table">
 					<div class="cart-header border-bottom border-top">
 						<div class="row d-flex text-capitalize">
-							<h4 class="col-lg-2 py-3 m-0">Bestellnummer.</h4>
+							<h4 class="col-lg-2 py-3 m-0">Bestellnummer</h4>
 							<h4 class="col-lg-2 py-3 m-0">Datum</h4>
-							<h4 class="col-lg-4 py-3 m-0">Addresse</h4>
+							<h4 class="col-lg-4 py-3 m-0">Adresse</h4>
 							<h4 class="col-lg-2 py-3 m-0">Anzahl</h4>
 							<h4 class="col-lg-2 py-3 m-0">Gesamtbetrag</h4>
 						</div>
 					</div>
 
+					{{#orders}}
 					<div class="cart-item border-bottom padding-small">
 						<div class="row align-items-center">
 							<div class="col-lg-2 col-md-3">
-								{Bestellnummer}
+								{{orderNo}}
 							</div>
 							<div class="col-lg-2 col-md-3">
-								{Bestelldatum}
+								{{billing.date}}
 							</div>
 							<div class="col-lg-4 col-md-3">
-								{Adresse}<br/>
+								{{billing.address}}
 							</div>
 							<div class="col-lg-2 col-md-3">
-								{Anzahl}
+								{{items.size}}
 							</div>
 							<div class="col-lg-2 col-md-3">
-								{Gesamtbetrag}
+								${{total}}
 							</div>
 						</div>
 					</div>
+					{{/orders}}
 				</div>
 
 				<div class="cart-totals padding-small pb-0">
-					<h3 class="mb-3">Cart Totals</h3>
+					<h3 class="mb-3">Gesamtbetrag</h3>
 					<div class="total-price pb-3">
 						<table cellspacing="0" class="table text-capitalize">
 							<tbody>
@@ -81,7 +83,7 @@
 								<td data-title="Total">
                       <span class="price-amount amount text-primary ps-5 fw-light">
                         <bdi>
-                          <span class="price-currency-symbol">$</span>{grandTotal}
+                          <span class="price-currency-symbol">$</span>{{grandTotal}}
 												</bdi>
                       </span>
 								</td>

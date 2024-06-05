@@ -59,7 +59,7 @@
 										<div class="cart-info d-flex gap-2 flex-wrap align-items-center">
 											<div class="col-lg-5">
 												<div class="card-image">
-													<img src="{{image}}" alt="{{title}}" class="img-fluid border rounded-3">
+													<img src="{{image}}" alt="{{model}}" class="img-fluid border rounded-3">
 												</div>
 											</div>
 											<div class="col-lg-6">
@@ -142,31 +142,21 @@
 						</div>
 
 						<div class="list-group">
-							<h3 class="">Payment method</h3>
+							<h3 class="">Bezahlmethode</h3>
 							<label class="list-group-item d-flex gap-2 border-0">
 								<input class="form-check-input flex-shrink-0" type="radio" name="paymentMethod"
-											 id="listGroupRadios1" value="CREDITCARD" required>
+											 id="listGroupRadios1" value="Kreditkarte" required>
 								<span>
                       <p class="mb-1">Credit card</p>
-                      <small>Credit card details will be required, later.</small>
+                      <small>Kreditkarten-Details folgen später.</small>
                     </span>
 							</label>
 							<label class="list-group-item d-flex gap-2 border-0">
 								<input class="form-check-input flex-shrink-0" type="radio" name="paymentMethod"
 											 id="listGroupRadios2" value="BANK_TRANSFER" required>
 								<span>
-                      <p class="mb-1">Direct bank transfer</p>
-                      <small>Make your payment directly into our bank account. Please use your Order ID. Your order will
-                        shipped after funds have cleared in our account.</small>
-                    </span>
-							</label>
-							<label class="list-group-item d-flex gap-2 border-0">
-								<input class="form-check-input flex-shrink-0" type="radio" name="paymentMethod"
-											 id="listGroupRadios3" value="CHECK" required>
-								<span>
-                      <p class="mb-1">Check payments</p>
-                      <small>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store
-                        Postcode.</small>
+                      <p class="mb-1">Sofortüberweisung</p>
+                      <small>Direktüberweisung vom Konto.</small>
                     </span>
 							</label>
 							<label class="list-group-item d-flex gap-2 border-0">
@@ -174,7 +164,7 @@
 											 id="listGroupRadios4" value="PAYPAL" required>
 								<span>
 									<p class="mb-1">Paypal</p>
-									<small>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</small>
+									<small>Zahlung über PayPal.</small>
 								</span>
 							</label>
 						</div>
@@ -182,92 +172,86 @@
 				</div>
 
 				<div class="col-lg-6">
-					<h3 class="mb-3">Billing Details</h3>
+					<h3 class="mb-3">Rechungsinformationen</h3>
 					<div class="billing-details">
 						<div class="mb-3">
-							<label for="firstName">First Name*</label>
+							<label for="firstName">Vorname*</label>
 							<input type="text" name="firstName" id="firstName" class="form-control mt-2 ps-3" required>
-							<span class="invalid-feedback">Please enter your first name</span>
+							<span class="invalid-feedback">Bitte den Vornamen eingeben</span>
 						</div>
 
 						<div class="mb-3">
-							<label for="lastName">Last Name*</label>
+							<label for="lastName">Nachname*</label>
 							<input type="text" name="lastName" id="lastName" class="form-control mt-2 ps-3" required>
-							<span class="invalid-feedback">Please enter your last name</span>
+							<span class="invalid-feedback">Bitte den Nachnamen eingeben</span>
 						</div>
 
 						<div class="mb-3">
-							<label for="company">Company Name (optional)</label>
+							<label for="company">Unternehmen (optional)</label>
 							<input type="text" name="company" id="company" class="form-control mt-2 mb-4">
 						</div>
 
 						<div class="mb-3">
-							<label for="country">Country / Region*</label>
+							<label for="country">Land / Region*</label>
 							<select name="country" id="country" class="form-select form-control mt-2"
 											aria-label="Default select example" required>
-								<option value="">-- Please select --</option>
-								<option value="US">United States</option>
-								<option value="UK">United Kingdom</option>
-								<option value="AU">Australia</option>
-								<option value="CA">Canada</option>
+								<option value="">-- Bitte auswählen --</option>
+								<option value="DE">Deutschland</option>
+								<option value="FR">Frankreich</option>
+								<option value="BL">Belgien</option>
+								<option value="CH">Schweiz</option>
 							</select>
-							<span class="invalid-feedback">Please select your country</span>
+							<span class="invalid-feedback">Bitte das Land auswählen</span>
 						</div>
 
 						<div class="mb-3">
-							<label for="street">Street Address*</label>
+							<label for="street">Straße & Hausnummer*</label>
 							<input type="text" name="street" id="street" placeholder="House number and street name"
 										 class="form-control mt-3 ps-3" required>
-							<span class="invalid-feedback">Please enter your house number and street name</span>
+							<span class="invalid-feedback">Bitte Straße und Hausnummer angeben</span>
 						</div>
 
 						<div class="mb-3">
-							<label for="city">Town / City *</label>
+							<label for="city">Stadt *</label>
 							<input type="text" name="city" id="city" class="form-control mt-3 ps-3" required>
-							<span class="invalid-feedback">Please enter your town or city</span>
+							<span class="invalid-feedback">Bitte Stadt angeben</span>
 						</div>
 
 						<div class="mb-3">
-							<label for="state">State (optional)</label>
+							<label for="state">Bundesland (optional)</label>
 							<select name="state" id="state" class="form-select form-control mt-2" aria-label="Default select example">
-								<option value="">-- Please select --</option>
-								<option value="0">Florida</option>
-								<option value="1">New York</option>
-								<option value="2">Chicago</option>
-								<option value="3">Texas</option>
-								<option value="3">San Jose</option>
-								<option value="3">Houston</option>
+								<option value="">-- Bitte auswählen --</option>
+								<option value="0">Hessen</option>
+								<option value="1">Bayern</option>
+								<option value="2">Niedersachsen</option>
+								<option value="3">Nordrhein-Westfalen</option>
+								<option value="4">Baden-Württemberg</option>
+								<option value="5">Berlin</option>
 							</select>
 						</div>
 
 						<div class="mb-3">
-							<label for="zipCode">Zip Code *</label>
-							<input type="text" name="zipCode" id="zipCode" class="form-control mt-2 ps-3" required>
-							<span class="invalid-feedback">Please enter your town or city</span>
-						</div>
-
-						<div class="mb-3">
-							<label for="phoneNumber">Phone (optional)</label>
+							<label for="phoneNumber">Telefonnummer (optional)</label>
 							<input type="text" name="phoneNumber" id="phoneNumber" class="form-control mt-2 ps-3">
 						</div>
 
 						<div class="mb-3">
-							<label for="email">Email address *</label>
+							<label for="email">Email *</label>
 							<input type="text" name="email" id="email" class="form-control mt-2 ps-3" required>
-							<span class="invalid-feedback">Please enter your Email address</span>
+							<span class="invalid-feedback">Bitte Email-Adresse angeben</span>
 						</div>
 					</div>
 
 					<div>
-						<h3 class="mb-3">Additional Information</h3>
+						<h3 class="mb-3">Zusatzinformation</h3>
 						<div class="billing-details">
-							<label for="notes">Order notes (optional)</label>
+							<label for="notes">Anmerkungen (optional)</label>
 							<textarea name="notes" id="notes" class="form-control pt-3 pb-3 ps-3 mt-2"
-												placeholder="Notes about your order. Like special notes for delivery."></textarea>
+												placeholder="Anmerkungen für die Lieferung."></textarea>
 						</div>
 					</div>
 					<div class="button-wrap mt-3">
-						<button type="submit" class="btn">Place order</button>
+						<button type="submit" class="btn">Bestellen</button>
 					</div>
 
 				</div>

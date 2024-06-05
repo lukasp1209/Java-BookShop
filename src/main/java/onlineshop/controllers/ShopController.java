@@ -56,7 +56,7 @@ public class ShopController extends BaseController {
         } catch (ParseException e) {
             log.error("Fehler beim Parsen der Zahl: " + cart.getGrandTotal());
             view.addAttribute("errorMessage", "Ungültiges Zahlenformat im Warenkorb.");
-            return "error"; // Eine Fehlerseite anzeigen oder zurück zur Warenkorbseite
+            return "error";
         }
         double shippingCosts = 3.99;
         double taxRate = 0.07;
@@ -146,5 +146,4 @@ public class ShopController extends BaseController {
         view.addAttribute("sortings", sortings);
         view.addAttribute("sort", currentSort.getValue());
     }
-
 }

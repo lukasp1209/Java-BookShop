@@ -29,7 +29,7 @@ public class CartController {
         Car car = shop.getArticleByNumber(id);
         if (car != null) {
             cart.addArticle(car);
-            message = "Article \"" + car.getModel() + "\" added to cart.";
+            message = "Auto \"" + car.getModel() + "\" zum Warenkorb hinzugefügt.";
         }
         atts.addFlashAttribute(MESSAGE, message);
         atts.addFlashAttribute(SHOW_MESSAGE, true);

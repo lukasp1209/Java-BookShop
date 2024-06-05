@@ -5,6 +5,7 @@ import onlineshop.merchandise.CartItem;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,10 @@ public class Cart {
             total += item.getTotalPrice();
         }
         return Shop.df.format(total);
+    }
+
+    public void clear() {
+        items.clear();
     }
 
     /**
@@ -116,5 +121,9 @@ public class Cart {
 
     public double calculateTotal() {
         return 0;
+    }
+
+    public Object getTotalPrice() {
+        return null;
     }
 }

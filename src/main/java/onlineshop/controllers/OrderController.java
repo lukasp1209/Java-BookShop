@@ -4,10 +4,11 @@ import onlineshop.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/order")
@@ -25,27 +26,37 @@ public class OrderController extends BaseController {
 
     @PostMapping(value = "/place")
     public String placeOrder(Model view, @ModelAttribute Billing newOrder) {
-        // TODO:
-        // 1. create a new order using 'newOrder'
-        // 2. add this order to customer's order list
-        // 3. redirect to '/order/{orderNumber}' and pass new orderId to path variable
-        int orderNumber = 1;
+        Order order = new Order(newOrder, cart.getItems(), cart.getTotalPrice());
+        customer.addOrder(order);
+        int orderNumber = order.getOrderNo();
         return "redirect:/order/" + orderNumber;
     }
 
     @GetMapping(value = "/{orderNumber}")
     public String showOrder(Model view, @PathVariable(name="orderNumber") Integer orderNumber) {
-        // TODO: show details of order with {orderNumber}
-        // 1. get order with 'orderNumber
-        getCartItems(view);
-        view.addAttribute("orderItems", cart.getItems());
+        Order order = customer.getOrder(orderNumber);
+
+        if (order == null) {
+            return "redirect:/order/all";
+        }
+
+        view.addAttribute("order", order);
+        view.addAttribute("orderItems", order.getItems());
+        view.addAttribute("total", order.getTotal());
+        view.addAttribute("message", "Bestellung mit der Nummer \"" + orderNumber + "\" ist eingegangen.");
+
         return "order";
     }
 
     @GetMapping(value = "/all")
     public String listOrders(Model view) {
-        // TODO: list all orders of the current customer
-        getCartItems(view);
+        List<Order> orders = customer.getOrders();
+
+        view.addAttribute("orders", orders);
+
+        double grandTotal = orders.stream().mapToDouble(Order::getTotal).sum();
+        view.addAttribute("grandTotal", grandTotal);
+
         return "order-list";
     }
 }

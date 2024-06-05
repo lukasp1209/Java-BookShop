@@ -18,7 +18,6 @@ public class Billing {
     private String email;
     PaymentMethod paymentMethod;
 
-    // TODO: generate Getters/Setters
     public String getFirstName() {
         return firstName;
     }
