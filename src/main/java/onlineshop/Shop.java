@@ -2,7 +2,6 @@ package onlineshop;
 
 import onlineshop.enums.Sorting;
 import onlineshop.merchandise.Car;
-import onlineshop.merchandise.Car;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.logging.log4j.LogManager;
@@ -132,6 +131,6 @@ public class Shop {
                 return car;
         }
         return null;
-
     }
 }
+

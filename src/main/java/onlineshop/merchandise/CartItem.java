@@ -17,6 +17,9 @@ public class CartItem extends Car {
         BeanUtils.copyProperties(car, this);
     }
 
+    public CartItem(Object product, int quantity, double price) {
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -43,5 +46,9 @@ public class CartItem extends Car {
 
     public String getTotalPriceFormatted() {
         return Shop.df.format(getTotalPrice());
+    }
+
+    protected Object getProduct() {
+        return null;
     }
 }

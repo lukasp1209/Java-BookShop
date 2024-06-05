@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>List of Orders</title>
+	<title>Bestellliste</title>
 	<meta name="keywords" content="">
 	<meta name="description" content="">
 	{{> partials/htmlHead }}
@@ -15,12 +15,12 @@
 		<div class="container">
 			<div class="row">
 				<div class="text-center">
-					<h1>List of Orders</h1>
+					<h1>Bestellliste</h1>
 					<div class="breadcrumbs">
 						<span class="item">
-							<a style="color: white;" href="index.html">Home > </a>
+							<a style="color: white;" href="index.html">Übersicht > </a>
 						</span>
-						<span class="item text-decoration-underline">List of Orders</span>
+						<span class="item text-decoration-underline">Bestellliste</span>
 					</div>
 				</div>
 			</div>
@@ -42,31 +42,30 @@
 				<div class="cart-table">
 					<div class="cart-header border-bottom border-top">
 						<div class="row d-flex text-capitalize">
-							<h4 class="col-lg-2 py-3 m-0">Order no.</h4>
-							<h4 class="col-lg-2 py-3 m-0">Date</h4>
-							<h4 class="col-lg-4 py-3 m-0">Address</h4>
-							<h4 class="col-lg-2 py-3 m-0">No. of Items</h4>
-							<h4 class="col-lg-2 py-3 m-0">Total</h4>
+							<h4 class="col-lg-2 py-3 m-0">Bestellnummer.</h4>
+							<h4 class="col-lg-2 py-3 m-0">Datum</h4>
+							<h4 class="col-lg-4 py-3 m-0">Addresse</h4>
+							<h4 class="col-lg-2 py-3 m-0">Anzahl</h4>
+							<h4 class="col-lg-2 py-3 m-0">Gesamtbetrag</h4>
 						</div>
 					</div>
 
 					<div class="cart-item border-bottom padding-small">
 						<div class="row align-items-center">
 							<div class="col-lg-2 col-md-3">
-								{Order no.}
+								{Bestellnummer}
 							</div>
 							<div class="col-lg-2 col-md-3">
-								{Order Date}
+								{Bestelldatum}
 							</div>
 							<div class="col-lg-4 col-md-3">
-								{Shipping Address}<br/>
-								Add a hyperlink to the order, here.
+								{Adresse}<br/>
 							</div>
 							<div class="col-lg-2 col-md-3">
-								{No. of Items}
+								{Anzahl}
 							</div>
 							<div class="col-lg-2 col-md-3">
-								{Total}
+								{Gesamtbetrag}
 							</div>
 						</div>
 					</div>

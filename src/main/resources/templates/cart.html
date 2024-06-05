@@ -1,153 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Cart</title>
-	<meta name="keywords" content="">
-	<meta name="description" content="">
-	{{> partials/htmlHead }}
+    <title>Warenkorb</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    {{> partials/htmlHead }}
 </head>
 <body>
 {{> partials/header }}
 
 <section class="hero-section position-relative padding-small"
-				 style="background-image: url(/images/banner-image-bg-1.jpg); color: white; background-size: cover; background-repeat: no-repeat; background-position: center;">
-	<div class="hero-content">
-		<div class="container">
-			<div class="row">
-				<div class="text-center">
-					<h1>Cart</h1>
-					<div class="breadcrumbs">
+         style="background-image: url(/images/banner-image-bg-1.jpg); color: white; background-size: cover; background-repeat: no-repeat; background-position: center;">
+    <div class="hero-content">
+        <div class="container">
+            <div class="row">
+                <div class="text-center">
+                    <h1>Warenkorb</h1>
+                    <div class="breadcrumbs">
 						<span class="item">
-							<a style="color: white;" href="index.html">Home > </a>
+							<a style="color: white;" href="index.html">Übersicht > </a>
 						</span>
-						<span class="item text-decoration-underline">Cart</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                        <span class="item text-decoration-underline">Warenkorb</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <section class="cart padding-small">
-	<div class="container">
-		<div class="row">
-			<main class="col-md-9">
-				{{#showMessage}}
-					<div class="alert alert-success alert-dismissible fade show" role="alert">
-						{{message}}
-						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-					</div>
-				{{/showMessage}}
+    <div class="container">
+        <div class="row">
+            <main class="col-md-9">
+                {{#showMessage}}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {{/showMessage}}
 
-				<div class="cart-table">
-					<div class="cart-header border-bottom border-top">
-						<div class="row d-flex text-capitalize">
-							<h4 class="col-lg-4 py-3 m-0">Product</h4>
-							<h4 class="col-lg-3 py-3 m-0">Quantity</h4>
-							<h4 class="col-lg-4 py-3 m-0">Subtotal</h4>
-						</div>
-					</div>
+                <div class="cart-table">
+                    <div class="cart-header border-bottom border-top">
+                        <div class="row d-flex text-capitalize">
+                            <h4 class="col-lg-4 py-3 m-0">Produkt</h4>
+                            <h4 class="col-lg-3 py-3 m-0">Anzahl</h4>
+                            <h4 class="col-lg-4 py-3 m-0">Summe</h4>
+                        </div>
+                    </div>
 
-					{{#cartItems}}
-						<div class="cart-item border-bottom padding-small">
-							<div class="row align-items-center">
-								<div class="col-lg-4 col-md-3">
-									<div class="cart-info d-flex gap-2 flex-wrap align-items-center">
-										<div class="col-lg-5">
-											<div class="card-image">
-												<img src="{{image}}" alt="{{model}}" class="img-fluid border rounded-3">
-											</div>
-										</div>
-										<div class="col-lg-4">
-											<div class="card-detail">
-												<h5 class="mt-2"><a href="/details/{{id}}">{{model}}</a></h5>
-												<div class="card-price">
-													<span class="price text-primary fw-light" data-currency-usd="${{price}}">${{price}}</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-6 col-md-7">
-									<div class="row d-flex">
-										<div class="col-md-6">
-											<div class="product-quantity my-2 my-2">
-												<div class="input-group product-qty align-items-center" style="max-width: 150px;">
+                    {{#cartItems}}
+                    <div class="cart-item border-bottom padding-small">
+                        <div class="row align-items-center">
+                            <div class="col-lg-4 col-md-3">
+                                <div class="cart-info d-flex gap-2 flex-wrap align-items-center">
+                                    <div class="col-lg-5">
+                                        <div class="card-image">
+                                            <img src="{{image}}" alt="{{model}}" class="img-fluid border rounded-3">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="card-detail">
+                                            <h5 class="mt-2"><a href="/details/{{id}}">{{model}}</a></h5>
+                                            <div class="card-price">
+                                                <span class="price text-primary fw-light"
+                                                      data-currency-usd="€{{price}}">€{{price}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-7">
+                                <div class="row d-flex">
+                                    <div class="col-md-6">
+                                        <div class="product-quantity my-2 my-2">
+                                            <div class="input-group product-qty align-items-center"
+                                                 style="max-width: 150px;">
 													<span class="input-group-btn">
 														<a href="/cart/decrease/{{id}}">
-															<button type="button" class="bg-white shadow border rounded-3 fw-light quantity-left-minus"
-																		data-type="minus" data-field="">
+															<button type="button"
+                                                                    class="bg-white shadow border rounded-3 fw-light quantity-left-minus"
+                                                                    data-type="minus" data-field="">
 																<svg width="16" height="16">
 																	<use xlink:href="#minus"></use>
 																</svg>
 															</button>
 														</a>
 													</span>
-													<input type="text" id="quantity" name="quantity"
-																 class="form-control bg-white shadow border rounded-3 py-2 mx-2 input-number text-center"
-																 value="{{quantity}}" min="1" max="100" required>
-													<span class="input-group-btn">
+                                                <input type="text" id="quantity" name="quantity"
+                                                       class="form-control bg-white shadow border rounded-3 py-2 mx-2 input-number text-center"
+                                                       value="{{quantity}}" min="1" max="100" required>
+                                                <span class="input-group-btn">
 														<a href="/cart/increase/{{id}}">
 															<button type="button"
-																			class="bg-white shadow border rounded-3 fw-light quantity-right-plus"
-																			data-type="plus" data-field="">
+                                                                    class="bg-white shadow border rounded-3 fw-light quantity-right-plus"
+                                                                    data-type="plus" data-field="">
 																<svg width="16" height="16">
 																	<use xlink:href="#plus"></use>
 																</svg>
 															</button>
 														</a>
 													</span>
-												</div>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="total-price">
-												<span class="money fs-2 fw-light text-primary">${{totalPriceFormatted}}</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-1 col-md-2">
-									<div class="cart-cross-outline">
-<!--										TODO: add confirm dialog -->
-										<a href="/cart/remove/{{id}}">
-											<svg class="cart-cross-outline" width="38" height="38">
-												<use xlink:href="#cart-cross-outline"></use>
-											</svg>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					{{/cartItems}}
-				</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="total-price">
+                                            <span class="money fs-2 fw-light text-primary">€{{totalPriceFormatted}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-md-2">
+                                <div class="cart-cross-outline">
+                                    <!--										TODO: add confirm dialog -->
+                                    <a href="/cart/remove/{{id}}">
+                                        <svg class="cart-cross-outline" width="38" height="38">
+                                            <use xlink:href="#cart-cross-outline"></use>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/cartItems}}
+                </div>
 
-				<div class="cart-totals padding-small pb-0">
-					<h3 class="mb-3">Cart Totals</h3>
-					<div class="total-price pb-3">
-						<table cellspacing="0" class="table text-capitalize">
-							<tbody>
-							<tr class="order-total pt-2 pb-2 border-bottom">
-								<th>Total</th>
-								<td data-title="Total">
+                <div class="cart-totals padding-small pb-0">
+                    <h3 class="mb-3">Warenkorb Summe</h3>
+                    <div class="total-price pb-3">
+                        <table cellspacing="0" class="table text-capitalize">
+                            <tbody>
+                            <tr class="order-total pt-2 pb-2 border-bottom">
+                                <th>Gesamt</th>
+                                <td data-title="Total">
                       <span class="price-amount amount text-primary ps-5 fw-light">
                         <bdi>
-                          <span class="price-currency-symbol">$</span>{{grandTotal}}
+                          <span class="price-currency-symbol">€</span>{{grandTotal}}
 												</bdi>
                       </span>
-								</td>
-							</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="button-wrap d-flex flex-wrap gap-3">
-						<a href="/" role="button" class="btn">Continue Shopping</a>
-						<a href="checkout.html" role="button" class="btn">Proceed to checkout</a>
-					</div>
-				</div>
-			</main>
-		</div>
-	</div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="button-wrap d-flex flex-wrap gap-3">
+                        <a href="/" role="button" class="btn">weiter einkaufen</a>
+                        <a href="checkout.html" role="button" class="btn">zur Kasse</a>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
 </section>
 
 {{> partials/footer }}

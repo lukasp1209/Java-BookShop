@@ -1,6 +1,5 @@
 package onlineshop;
 
-import onlineshop.merchandise.Book;
 import onlineshop.merchandise.Car;
 import onlineshop.merchandise.CartItem;
 import org.springframework.stereotype.Component;
@@ -113,5 +112,9 @@ public class Cart {
             }
         }
         return null;
+    }
+
+    public double calculateTotal() {
+        return 0;
     }
 }

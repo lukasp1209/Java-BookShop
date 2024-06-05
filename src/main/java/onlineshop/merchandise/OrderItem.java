@@ -5,17 +5,39 @@ public class OrderItem extends CartItem {
     private double shippingCost;
     private double taxAmount;
 
-
     public OrderItem(CartItem cartItem) {
-        super();
-        // TODO: implement this
+        super(cartItem.getProduct(), cartItem.getQuantity(), cartItem.getPrice());
     }
 
     public OrderItem(CartItem cartItem, double discount, double shippingCost, double taxAmount) {
         this(cartItem);
-        // TODO: copy the fields
+        this.discount = discount;
+        this.shippingCost = shippingCost;
+        this.taxAmount = taxAmount;
     }
 
-    // TODO: generate Getters/Setters
+    // Getters and Setters
+    public double getDiscount() {
+        return discount;
+    }
 
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public double getShippingCost() {
+        return shippingCost;
+    }
+
+    public void setShippingCost(double shippingCost) {
+        this.shippingCost = shippingCost;
+    }
+
+    public double getTaxAmount() {
+        return taxAmount;
+    }
+
+    public void setTaxAmount(double taxAmount) {
+        this.taxAmount = taxAmount;
+    }
 }

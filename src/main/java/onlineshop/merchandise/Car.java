@@ -23,6 +23,7 @@ public class Car {
         
     }
 
+
     public int getId() {
         return id;
     }
@@ -45,6 +46,10 @@ public class Car {
 
     public double getPrice() {
         return price;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getImage() {

@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.*;
 
 @Controller
@@ -45,7 +49,15 @@ public class ShopController extends BaseController {
     public String checkout(Model view) {
         getCartItems(view);
 
-        double subTotal = Double.parseDouble(cart.getGrandTotal());
+        double subTotal = 0.0;
+        try {
+            NumberFormat format = NumberFormat.getInstance(Locale.GERMANY);
+            subTotal = format.parse(cart.getGrandTotal()).doubleValue();
+        } catch (ParseException e) {
+            log.error("Fehler beim Parsen der Zahl: " + cart.getGrandTotal());
+            view.addAttribute("errorMessage", "Ungültiges Zahlenformat im Warenkorb.");
+            return "error"; // Eine Fehlerseite anzeigen oder zurück zur Warenkorbseite
+        }
         double shippingCosts = 3.99;
         double taxRate = 0.07;
         double taxes = subTotal * taxRate;
@@ -61,13 +73,24 @@ public class ShopController extends BaseController {
     @GetMapping(value = {"/details.html"})
     public String detailsPage(Model view,
                               @RequestParam(name = "id") Integer id,
-                              RedirectAttributes atts) {
-        // TODO: 1. get the article with the {id} article number from the shop
-        // 2. if it exists, add it to the view attributes as 'book'
-        // 3. if it doesn't, show an error message using 'atts.addFlashAttribute()'
+                              RedirectAttributes atts) throws IOException {
+        // 1. Den Artikel mit der {id} Artikelnummer aus dem Shop abrufen
+        Car car = shop.getArticleByNumber(id);
+
+        // 2. Wenn der Artikel existiert, füge ihn den View-Attributen als 'car' hinzu
+        if (car != null) {
+            view.addAttribute("car", car);
+        } else {
+            // 3. Wenn er nicht existiert, zeige eine Fehlermeldung mit 'atts.addFlashAttribute()' an
+            atts.addFlashAttribute("errorMessage", "Artikel mit der ID " + id + " wurde nicht gefunden.");
+            return "redirect:/index.html";
+        }
+
+        // Warenkorb-Artikel zum View hinzufügen
         getCartItems(view);
         return "details";
     }
+
 
     @GetMapping(value = {"/{name}.html"})
     public String htmlMapping(Model view, @PathVariable(name = "name") String name) {

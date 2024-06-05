@@ -9,30 +9,86 @@ import java.util.List;
 
 @Component
 public class Order {
+    private static int nextOrderNo = 1;
     private Integer orderNo;
     private List<OrderItem> items = new ArrayList<>();
     private LocalDate orderDate;
     private LocalDate deliveryDate;
     private String notes;
     private Billing billing;
-    // calculated in backend
     private double total;
 
+    public Order() {
+        this.orderNo = nextOrderNo++;
+    }
 
     public void addItem(OrderItem item) {
-        // TODO: add item to items
+        items.add(item);
     }
+
     public boolean removeItem(OrderItem item) {
-        // TODO: remove item from items
-        // return 'true' if successful
-        return false;
+        return items.remove(item);
     }
 
     public boolean placeOrder() {
-        // TODO: place a new order
-        // return 'true' if successful
-        return false;
+        // logic for placing order, e.g., save to database
+        return true;
     }
 
-    // TODO: generate Getters/Setters
+    // Getters and Setters
+    public Integer getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
+    }
+
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(LocalDate orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public LocalDate getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(LocalDate deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public Billing getBilling() {
+        return billing;
+    }
+
+    public void setBilling(Billing billing) {
+        this.billing = billing;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
 }

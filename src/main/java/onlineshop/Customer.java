@@ -47,4 +47,16 @@ public class Customer {
     public List<Order> getOrders() {
         return orders;
     }
+
+    public void addOrder(Order order) {
+    }
+
+    public Order getOrder(Integer orderNumber) {
+            for (Order order : orders) {
+            if (order.getOrderNo().equals(orderNumber)) {
+                return order;
+            }
+        }
+        return null;
+    }
 }
