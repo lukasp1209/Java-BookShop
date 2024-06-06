@@ -11,19 +11,19 @@
 
 <section class="cart padding-small">
     <div class="container">
-        <h1>Bestellbestätigung</h1>
+        <h1 class="mb-1">Bestellbestätigung</h1>
         <p>Vielen Dank für Ihre Bestellung! Ihre Bestellung ist eingegangen.</p>
-        <h3>Rechnungsinformationen</h3>
+        <h3 class="mb-3">Rechnungsinformationen</h3>
         <p>Vorname: {{firstName}}</p>
         <p>Nachname: {{lastName}}</p>
         <p>Adresse: {{street}}, {{city}}, {{country}}</p>
-        <h3>Bestellte Produkte</h3>
+        <h3 class="mb-3">Bestellte Produkte</h3>
         <ul>
             {{#cartItems}}
             <li>{{model}} - {{quantity}} Stück - {{totalPriceFormatted}} Euro</li>
             {{/cartItems}}
         </ul>
-        <h3>Gesamtsumme</h3>
+        <h3 class="mb-3">Gesamtsumme</h3>
         <p>{{grandTotal}} Euro</p>
     </div>
 </section>
