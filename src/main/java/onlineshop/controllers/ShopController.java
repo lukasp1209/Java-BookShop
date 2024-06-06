@@ -54,7 +54,7 @@ public class ShopController extends BaseController {
             NumberFormat format = NumberFormat.getInstance(Locale.GERMANY);
             subTotal = format.parse(cart.getGrandTotal()).doubleValue();
         } catch (ParseException e) {
-            log.error("Fehler beim Parsen der Zahl: " + cart.getGrandTotal());
+            log.error("Fehler beim Parsen der Zahl: {}", cart.getGrandTotal());
             view.addAttribute("errorMessage", "Ungültiges Zahlenformat im Warenkorb.");
             return "error";
         }

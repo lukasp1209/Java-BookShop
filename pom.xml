@@ -10,7 +10,7 @@
     </properties>
 
     <groupId>onlineshop</groupId>
-    <artifactId>Book-Shop</artifactId>
+    <artifactId>Car-Shop</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Book-Shop</name>
     <description>Book shop with Spring Boot</description>

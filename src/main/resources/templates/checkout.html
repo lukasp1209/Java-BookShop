@@ -42,7 +42,7 @@
 			<div class="row d-flex flex-wrap">
 
 				<div class="col-lg-6">
-					<h3 class="mb-3">Your order</h3>
+					<h3 class="mb-3">Ihre Bestellung</h3>
 					<div class="cart- table">
 						<div class="cart-header border-bottom border-top">
 							<div class="row d-flex text-capitalize">
@@ -66,7 +66,7 @@
 												<div class="card-detail">
 													<h5 class="mt-2"><a href="/details/{{id}}">{{model}}</a></h5>
 													<div class="card-price">
-														<span class="price text-primary fw-light" data-currency-usd="${{price}}">${{price}}</span>
+														<span class="price text-primary fw-light" data-currency-usd="${{price}}">{{price}} Euro</span>
 													</div>
 												</div>
 											</div>
@@ -99,41 +99,41 @@
 							<table cellspacing="0" class="table text-capitalize">
 								<tbody>
 								<tr class="subtotal pt-2 pb-2 border-bottom">
-									<th>Subtotal</th>
+									<th>Zwischensumme</th>
 									<td data-title="Subtotal">
 										<span class="price-amount amount text-primary ps-5 fw-light">
 											<bdi>
-												<span class="price-currency-symbol">$</span>{{subTotal}}
+												<span class="price-currency-symbol"></span>{{subTotal}} Euro
 											</bdi>
 										</span>
 									</td>
 								</tr>
 								<tr class="subtotal pt-2 pb-2 border-top border-bottom">
-									<th>Shipping</th>
+									<th>Lieferkosten</th>
 									<td data-title="Shipping">
                           <span class="price-amount amount text-primary ps-5 fw-light">
                             <bdi>
-                              <span class="price-currency-symbol">$</span>{{shippingCosts}}
+                              <span class="price-currency-symbol"></span>{{shippingCosts}} Euro
                             </bdi>
                           </span>
 									</td>
 								</tr>
 								<tr class="subtotal pt-2 pb-2 border-top border-bottom">
-									<th>Taxes</th>
+									<th>Steuern</th>
 									<td data-title="Shipping">
                           <span class="price-amount amount text-primary ps-5 fw-light">
                             <bdi>
-                              <span class="price-currency-symbol">$</span>{{taxes}}
+                              <span class="price-currency-symbol"></span>{{taxes}} Euro
                             </bdi>
                           </span>
 									</td>
 								</tr>
 								<tr class="order-total pt-2 pb-2 border-bottom">
-									<th>Grand Total</th>
+									<th>Gesamtsumme</th>
 									<td data-title="Total">
                           <span class="price-amount amount text-primary ps-5 fw-light">
                             <bdi>
-                              <span class="price-currency-symbol">$</span>{{grandTotal}}</bdi>
+                              <span class="price-currency-symbol"></span>{{grandTotal}} Euro</bdi>
                           </span>
 									</td>
 								</tr>
@@ -206,7 +206,7 @@
 
 						<div class="mb-3">
 							<label for="street">Straße & Hausnummer*</label>
-							<input type="text" name="street" id="street" placeholder="House number and street name"
+							<input type="text" name="street" id="street"
 										 class="form-control mt-3 ps-3" required>
 							<span class="invalid-feedback">Bitte Straße und Hausnummer angeben</span>
 						</div>

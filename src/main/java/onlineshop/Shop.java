@@ -116,11 +116,11 @@ public class Shop {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        log.info("{} books imported", cars.size());
+        log.info("{} cars imported", cars.size());
     }
 
     /**
-     * Gets an article/book by its article number
+     * Gets an article by its article number
      *
      * @param id {@link Integer}
      * @return existingBook {@link Car}

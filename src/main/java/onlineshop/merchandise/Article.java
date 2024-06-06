@@ -34,11 +34,11 @@ public class Article {
     this.image = image;
   }
 
-  public int getArticleNo() {
+  public int getId() {
     return id;
   }
 
-  public void setArticleNo(int id) {
+  public void setId(int id) {
     this.id = id;
   }
 

@@ -63,7 +63,7 @@
                                             <h5 class="mt-2"><a href="/details/{{id}}">{{model}}</a></h5>
                                             <div class="card-price">
                                                 <span class="price text-primary fw-light"
-                                                      data-currency-usd="€{{price}}">€{{price}}</span>
+                                                      data-currency-usd="{{price}}">{{price}} Euro</span>
                                             </div>
                                         </div>
                                     </div>
@@ -105,7 +105,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="total-price">
-                                            <span class="money fs-2 fw-light text-primary">€{{totalPriceFormatted}}</span>
+                                            <span class="money fs-2 fw-light text-primary">{{totalPriceFormatted}} Euro</span>
                                         </div>
                                     </div>
                                 </div>
@@ -135,7 +135,7 @@
                                 <td data-title="Total">
                       <span class="price-amount amount text-primary ps-5 fw-light">
                         <bdi>
-                          <span class="price-currency-symbol">€</span>{{grandTotal}}
+                          <span class="price-currency-symbol"></span>{{grandTotal}} Euro
 												</bdi>
                       </span>
                                 </td>
@@ -144,7 +144,7 @@
                         </table>
                     </div>
                     <div class="button-wrap d-flex flex-wrap gap-3">
-                        <a href="/" role="button" class="btn">weiter einkaufen</a>
+                        <a href="index.html" role="button" class="btn">weiter einkaufen</a>
                         <a href="checkout.html" role="button" class="btn">zur Kasse</a>
                     </div>
                 </div>
