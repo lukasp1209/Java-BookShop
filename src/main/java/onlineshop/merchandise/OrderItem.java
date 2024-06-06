@@ -9,12 +9,12 @@ public class OrderItem extends CartItem {
         super(cartItem.getProduct(), cartItem.getQuantity(), cartItem.getPrice());
     }
 
-    public OrderItem(CartItem cartItem, double discount, double shippingCost, double taxAmount) {
-        this(cartItem);
-        this.discount = discount;
-        this.shippingCost = shippingCost;
-        this.taxAmount = taxAmount;
-    }
+//    public OrderItem(CartItem cartItem, double discount, double shippingCost, double taxAmount) {
+//        this(cartItem);
+//        this.discount = discount;
+//        this.shippingCost = shippingCost;
+//        this.taxAmount = taxAmount;
+//    }
 
     // Getters and Setters
     public double getDiscount() {

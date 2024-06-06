@@ -12,7 +12,7 @@ import java.util.List;
 @Component
 public class Order {
     private static int nextOrderNo = 1;
-    private Integer orderNo;
+    private Integer orderNo = 1;
     private List<OrderItem> items = new ArrayList<>();
     private LocalDate orderDate;
     private LocalDate deliveryDate;

@@ -53,7 +53,7 @@ public class CartController {
     public String decreaseQuantity(@PathVariable(name = "id") Integer id, RedirectAttributes atts) {
         Car article = shop.getArticleByNumber(id);
         if (!cart.decreaseQuantity(id)) {
-            atts.addFlashAttribute(MESSAGE, "Article \"" + article.getModel() + "\" removed from cart.");
+            atts.addFlashAttribute(MESSAGE, "Auto \"" + article.getModel() + "\" vom Warenkorb entfernt.");
             atts.addFlashAttribute(SHOW_MESSAGE, true);
         }
         return "redirect:/cart.html";

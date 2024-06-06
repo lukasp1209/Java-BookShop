@@ -27,7 +27,7 @@
 						<span class="item">
 							<a style="color: white;" href="index.html">Übersicht > </a>
 						</span>
-						<span class="item text-decoration-underline">Bazahlung</span>
+						<span class="item text-decoration-underline">Bezahlung</span>
 					</div>
 				</div>
 			</div>
@@ -85,7 +85,7 @@
 
 									<div class="col-4">
 										<div class="total-price">
-											<span class="money fw-light text-primary">${{totalPriceFormatted}}</span>
+											<span class="money fw-light text-primary">{{totalPriceFormatted}} Euro</span>
 										</div>
 
 									</div>
@@ -145,28 +145,29 @@
 							<h3 class="">Bezahlmethode</h3>
 							<label class="list-group-item d-flex gap-2 border-0">
 								<input class="form-check-input flex-shrink-0" type="radio" name="paymentMethod"
-											 id="listGroupRadios1" value="Kreditkarte" required>
+									   id="listGroupRadios1" value="CREDITCARD" required>
 								<span>
-                      <p class="mb-1">Credit card</p>
-                      <small>Kreditkarten-Details folgen später.</small>
-                    </span>
+        <p class="mb-1">Kreditkarte</p>
+        <small>Kreditkarten-Details folgen später.</small>
+    </span>
 							</label>
 							<label class="list-group-item d-flex gap-2 border-0">
 								<input class="form-check-input flex-shrink-0" type="radio" name="paymentMethod"
-											 id="listGroupRadios2" value="BANK_TRANSFER" required>
+									   id="listGroupRadios2" value="BANK_TRANSFER" required>
 								<span>
-                      <p class="mb-1">Sofortüberweisung</p>
-                      <small>Direktüberweisung vom Konto.</small>
-                    </span>
+        <p class="mb-1">Sofortüberweisung</p>
+        <small>Direktüberweisung vom Konto.</small>
+    </span>
 							</label>
 							<label class="list-group-item d-flex gap-2 border-0">
 								<input class="form-check-input flex-shrink-0" type="radio" name="paymentMethod"
-											 id="listGroupRadios4" value="PAYPAL" required>
+									   id="listGroupRadios4" value="PAYPAL" required>
 								<span>
-									<p class="mb-1">Paypal</p>
-									<small>Zahlung über PayPal.</small>
-								</span>
+        <p class="mb-1">Paypal</p>
+        <small>Zahlung über PayPal.</small>
+    </span>
 							</label>
+
 						</div>
 					</div>
 				</div>

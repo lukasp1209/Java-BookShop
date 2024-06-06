@@ -33,7 +33,7 @@ public class OrderController extends BaseController {
     }
 
     @GetMapping(value = "/{orderNumber}")
-    public String showOrder(Model view, @PathVariable(name="orderNumber") Integer orderNumber) {
+    public String showOrder(Model view, @PathVariable(name = "orderNumber") Integer orderNumber) {
         Order order = customer.getOrder(orderNumber);
 
         if (order == null) {
